@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fremont Academy Official Palette -->
+    <color name="fremont_forest_green">#0E4D2D</color>
+    <color name="fremont_dark_green">#0A3820</color>
+    <color name="fremont_emerald">#186B43</color>
+    <color name="fremont_gold">#FFC72C</color>
+    <color name="fremont_warm_amber">#E6A817</color>
+    <color name="fremont_cream">#FFF8E7</color>
+    <color name="fremont_teal">#288B77</color>
+
+    <!-- UI Background and Accents -->
+    <color name="black">#000000</color>
+    <color name="oled_dark_gray">#121212</color>
+    <color name="slate_dark">#1C2321</color>
+    <color name="slate_gray">#7D8C86</color>
+    <color name="white">#FFFFFF</color>
+</resources>
+
