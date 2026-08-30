@@ -127,6 +127,56 @@ class WatchFaceConfigTest {
     }
 
     /**
+     * Same trap outside complications: [DAY_OF_WEEK_SHORT] and [MONTH_SHORT] look
+     * reasonable, parse fine, and render as empty strings on the watch. The real names
+     * are the _S (short) and _F (full) suffixes.
+     *
+     * List taken from VersionRegistry.kt in Google's own validator
+     * (github.com/google/watchface), which is the authoritative set.
+     */
+    @Test
+    fun testDataSourceExpressionsAreRecognised() {
+        val valid = setOf(
+            "ACCELEROMETER_ANGLE_X", "ACCELEROMETER_ANGLE_XY", "ACCELEROMETER_ANGLE_Y",
+            "ACCELEROMETER_ANGLE_Z", "ACCELEROMETER_IS_SUPPORTED", "ACCELEROMETER_X",
+            "ACCELEROMETER_Y", "ACCELEROMETER_Z", "AMPM_POSITION", "AMPM_STATE",
+            "AMPM_STRING", "BATTERY_CHARGING_STATUS", "BATTERY_IS_LOW", "BATTERY_PERCENT",
+            "BATTERY_TEMPERATURE_CELSIUS", "BATTERY_TEMPERATURE_FAHRENHEIT",
+            "DAY", "DAYS_IN_MONTH", "DAY_0_30", "DAY_0_30_HOUR", "DAY_HOUR",
+            "DAY_OF_WEEK", "DAY_OF_WEEK_F", "DAY_OF_WEEK_S", "DAY_OF_YEAR", "DAY_Z",
+            "FIRST_DAY_OF_WEEK", "HEART_RATE", "HEART_RATE_Z", "HOURS_SINCE_EPOCH",
+            "HOUR_0_11", "HOUR_0_11_MINUTE", "HOUR_0_11_Z", "HOUR_0_23",
+            "HOUR_0_23_MINUTE", "HOUR_0_23_Z", "HOUR_1_12", "HOUR_1_12_MINUTE",
+            "HOUR_1_12_Z", "HOUR_1_24", "HOUR_1_24_MINUTE", "HOUR_1_24_Z",
+            "HOUR_TENS_DIGIT", "HOUR_UNITS_DIGIT", "IS_24_HOUR_MODE",
+            "IS_DAYLIGHT_SAVING_TIME", "LANGUAGE_LOCALE_NAME", "MILLISECOND", "MINUTE",
+            "MINUTES_SINCE_EPOCH", "MINUTE_SECOND", "MINUTE_TENS_DIGIT",
+            "MINUTE_UNITS_DIGIT", "MINUTE_Z", "MONTH", "MONTH_0_11", "MONTH_0_11_DAY",
+            "MONTH_DAY", "MONTH_F", "MONTH_S", "MONTH_Z", "MOON_PHASE_POSITION",
+            "MOON_PHASE_TYPE", "MOON_PHASE_TYPE_STRING", "SECOND", "SECONDS_IN_DAY",
+            "SECONDS_SINCE_EPOCH", "SECOND_MILLISECOND", "SECOND_TENS_DIGIT",
+            "SECOND_UNITS_DIGIT", "SECOND_Z", "STEP_COUNT", "STEP_GOAL", "STEP_PERCENT",
+            "TIMEZONE", "TIMEZONE_ABB", "TIMEZONE_ID", "TIMEZONE_OFFSET",
+            "TIMEZONE_OFFSET_DST", "TIMEZONE_OFFSET_MINUTES",
+            "TIMEZONE_OFFSET_MINUTES_DST", "UNREAD_NOTIFICATION_COUNT", "UTC_TIMESTAMP",
+            "WEATHER.CHANCE_OF_PRECIPITATION", "WEATHER.CONDITION",
+            "WEATHER.CONDITION_NAME", "WEATHER.DAY_TEMPERATURE_HIGH",
+            "WEATHER.DAY_TEMPERATURE_LOW", "WEATHER.IS_AVAILABLE", "WEATHER.IS_DAY",
+            "WEATHER.IS_ERROR", "WEATHER.LAST_UPDATED", "WEATHER.TEMPERATURE",
+            "WEATHER.TEMPERATURE_UNIT", "WEATHER.UV_INDEX", "WEEK_IN_MONTH",
+            "WEEK_IN_YEAR", "YEAR", "YEAR_MONTH", "YEAR_MONTH_DAY", "YEAR_S"
+        )
+        // COMPLICATION.* is scoped to a complication and CONFIGURATION.* refers to the
+        // user configuration ids declared in this file; both are covered elsewhere.
+        val used = Regex("""\[([A-Z][A-Z_0-9.]*)]""")
+            .findAll(File("src/main/res/raw/watchface.xml").readText())
+            .map { it.groupValues[1] }
+            .filterNot { it.startsWith("COMPLICATION.") || it.startsWith("CONFIGURATION.") }
+            .toSet()
+        assertEquals("Unknown data source expressions", emptySet<String>(), used - valid)
+    }
+
+    /**
      * The whole watch face is validated against the format version declared in the
      * manifest. Using a newer feature than that version fails validation outright.
      */

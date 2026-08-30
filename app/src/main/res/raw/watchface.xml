@@ -64,8 +64,8 @@
             <Text align="CENTER">
                 <Font family="SYNC_TO_DEVICE" size="18" weight="MEDIUM" color="[CONFIGURATION.themeColor.1]">
                     <Template>%s, %s %s
-                        <Parameter expression="[DAY_OF_WEEK_SHORT]"/>
-                        <Parameter expression="[MONTH_SHORT]"/>
+                        <Parameter expression="[DAY_OF_WEEK_S]"/>
+                        <Parameter expression="[MONTH_S]"/>
                         <Parameter expression="[DAY]"/>
                     </Template>
                 </Font>
