@@ -83,4 +83,97 @@ class WatchFaceConfigTest {
         val previewFile = File("src/main/res/drawable/preview.png")
         assertTrue("preview.png should exist", previewFile.exists())
     }
+
+    // --- Checks that mirror what the Watch Face Format runtime itself enforces. ---
+
+    /**
+     * The runtime only offers the Customize button when watch_face_info.xml opts in.
+     * Editable defaults to false, and without it neither the colour theme nor any
+     * complication slot can be changed on the watch.
+     */
+    @Test
+    fun testWatchFaceIsMarkedEditable() {
+        val info = File("src/main/res/xml/watch_face_info.xml").readText()
+        assertTrue(
+            "watch_face_info.xml must declare Editable value=\"true\" or the watch " +
+                "hides the Customize button",
+            Regex("""<Editable\s+value="true"""").containsMatchIn(info)
+        )
+    }
+
+    /**
+     * Complication data sources are plain strings, so a typo such as COMPLICATION.ICON
+     * parses cleanly and then silently renders nothing.
+     */
+    @Test
+    fun testComplicationExpressionsAreRecognised() {
+        val valid = setOf(
+            "TEXT", "TITLE",
+            "MONOCHROMATIC_IMAGE", "MONOCHROMATIC_IMAGE_AMBIENT",
+            "SMALL_IMAGE", "SMALL_IMAGE_AMBIENT", "IMAGE_STYLE", "PHOTO_IMAGE",
+            "RANGED_VALUE_MIN", "RANGED_VALUE_MAX", "RANGED_VALUE_VALUE",
+            "RANGED_VALUE_COLORS", "RANGED_VALUE_COLORS_INTERPOLATE",
+            "GOAL_PROGRESS_VALUE", "GOAL_PROGRESS_TARGET_VALUE",
+            "GOAL_PROGRESS_COLORS", "GOAL_PROGRESS_COLORS_INTERPOLATE",
+            "WEIGHTED_ELEMENTS_COLORS", "WEIGHTED_ELEMENTS_WEIGHTS",
+            "WEIGHTED_ELEMENTS_BACKGROUND_COLOR"
+        )
+        val used = Regex("""\[COMPLICATION\.([A-Z_]+)]""")
+            .findAll(File("src/main/res/raw/watchface.xml").readText())
+            .map { it.groupValues[1] }
+            .toSet()
+        assertTrue("Expected the watch face to use complication data", used.isNotEmpty())
+        assertEquals("Unknown COMPLICATION.* data sources", emptySet<String>(), used - valid)
+    }
+
+    /**
+     * The whole watch face is validated against the format version declared in the
+     * manifest. Using a newer feature than that version fails validation outright.
+     */
+    @Test
+    fun testDeclaredFormatVersionCoversFeaturesUsed() {
+        val manifest = File("src/main/AndroidManifest.xml").readText()
+        val declared = Regex(
+            """com\.google\.wear\.watchface\.format\.version"\s*android:value="(\d+)""""
+        ).find(manifest)?.groupValues?.get(1)?.toInt()
+        assertNotNull("Manifest must declare com.google.wear.watchface.format.version", declared)
+
+        val watchFace = File("src/main/res/raw/watchface.xml").readText()
+        // GOAL_PROGRESS and WEIGHTED_ELEMENTS arrived in Watch Face Format version 2.
+        val needsV2 = watchFace.contains("GOAL_PROGRESS") || watchFace.contains("WEIGHTED_ELEMENTS")
+        if (needsV2) {
+            assertTrue(
+                "watchface.xml uses a version 2 feature but the manifest declares " +
+                    "format version $declared",
+                declared!! >= 2
+            )
+        }
+    }
+
+    /**
+     * A Watch Face Format bundle must be resource-only. Any code dependency ends up in
+     * classes.dex and contradicts android:hasCode="false" in the manifest.
+     */
+    @Test
+    fun testBundleShipsNoCode() {
+        assertTrue(
+            "AndroidManifest.xml must set android:hasCode to false",
+            File("src/main/AndroidManifest.xml").readText().contains("android:hasCode=\"false\"")
+        )
+
+        val shipping = File("build.gradle.kts").readLines()
+            .map { it.trim() }
+            .filter { it.startsWith("implementation(") || it.startsWith("api(") }
+        assertEquals(
+            "A watch face bundle must ship no code dependencies",
+            emptyList<String>(),
+            shipping
+        )
+
+        val mainSources = File("src/main/java")
+        assertTrue(
+            "src/main/java must stay empty - watch face bundles cannot contain code",
+            !mainSources.exists() || mainSources.walkTopDown().none { it.isFile }
+        )
+    }
 }

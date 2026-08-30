@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WatchFaceInfo>
     <Preview value="@drawable/preview" />
+    <!-- Editable defaults to false. Without it the system hides the Customize
+         button, so neither the colour theme nor the complication slots can be
+         changed on the watch. -->
+    <Editable value="true" />
+    <AvailableInRetail value="true" />
+    <MultipleInstancesAllowed value="true" />
 </WatchFaceInfo>
