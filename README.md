@@ -6,8 +6,8 @@ Custom high-density watch face designed for Robert's workday at the Fremont Acad
 
 ## Features
 
-- **8 Multi-Type Complication Slots**: Curated layout for school schedules, biometrics, campus walk tracking, outdoor weather, calendar, and quick wellness actions.
-- **Dedicated School Bell Period Pod (Slot 1)**: Seamlessly integrates with the companion `school-period-complication` app to display active periods (`P1`, `P2`, `Lunch`, etc.) and countdown timers.
+- **6 Balanced Complication Slots**: Curated layout for school bell schedules, biometrics, campus walk tracking, outdoor weather, UV index, and battery life.
+- **Dedicated School Bell Period Pod (Slot 3)**: Seamlessly integrates with the companion `school-period-complication` app to display active periods (`P1`, `P2`, `Lunch`, etc.) and countdown timers.
 - **Fremont Academy Crest & Colors**: Forest Green (`#0E4D2D`), Aztec Gold (`#FFC72C`), Warm Cream (`#FFF8E7`), Tactical Slate, and Midnight Teal palettes.
 - **OLED Always-On Display (AOD)**: Optimized low-power mode with <5% pixel ratio to preserve Galaxy Watch 7 battery throughout long workdays.
 - **Full Wear OS 5 Compliance**: Uses declarative Watch Face Format XML without background runtime battery drain.
@@ -17,29 +17,29 @@ Custom high-density watch face designed for Robert's workday at the Fremont Acad
 ## Complication Slot Layout
 
 ```
-                       [ SLOT 1: Bell Schedule & Countdown ]
-                               (School Period App)
-               [ SLOT 7: Weather ]              [ SLOT 2: Heart Rate / Stress ]
-           (Temp & Conditions)                      (Wellness Metric)
-                        \                                /
-   [ SLOT 6: Quick Action ]       [ FREMONT LOGO ]       [ SLOT 3: Next Event ]
-  (Wellness Form / Water)     [ 10:42 AM | MON AUG 30 ]     (Calendar / Meeting)
-                        /                                \
-           [ SLOT 5: Steps / Active ]        [ SLOT 4: Watch Battery ]
-              (Campus Activity)                   (Percentage & Ring)
-                       [ SLOT 8: Sub-Dial / Notification Dot ]
+        [ Slot 1: WEATHER ]     ( Fremont Shield )     [ Slot 2: UV INDEX ]
+       (Temp & Conditions)            44x44               (UV Level & Sun)
+                  \                                        /
+                   \     [ MON, AUG 30 ]  (Aztec Gold)    /
+                    \      10:42 AM       (Crisp White)  /
+                     -----------------------------------
+                     [  SLOT 3: SCHOOL BELL PERIOD POD  ]
+                     [     P2 • English  |  18m left    ]
+                     -----------------------------------
+                    /                                   \
+                   /                                     \
+        [ Slot 4: STEPS ]       [ Slot 5: HEART RATE ]    [ Slot 6: BATTERY ]
+       (Activity & Count)           (Pulse & BPM)           (% & Gauge Ring)
 ```
 
 | Slot ID | Position | Recommended Provider | Supported Types |
 | :--- | :--- | :--- | :--- |
-| **Slot 1** | Top Center (Curved Pod) | School Period Complication (`com.shieldrj.schoolperiod`) | `SHORT_TEXT`, `RANGED_VALUE`, `LONG_TEXT` |
-| **Slot 2** | Top Right | Samsung Health Heart Rate / Stress | `SHORT_TEXT`, `RANGED_VALUE` |
-| **Slot 3** | Center Right | Google / Samsung Calendar (Next Event) | `SHORT_TEXT` |
-| **Slot 4** | Bottom Right | Watch Battery Level | `SHORT_TEXT`, `RANGED_VALUE` |
-| **Slot 5** | Bottom Left | Samsung Health Daily Steps / Active Time | `SHORT_TEXT`, `GOAL_PROGRESS` |
-| **Slot 6** | Center Left | Quick Shortcut (Sign-In Form, Voice, Timer) | `SHORT_TEXT`, `SMALL_IMAGE` |
-| **Slot 7** | Top Left | Weather & UV Index | `SHORT_TEXT`, `RANGED_VALUE` |
-| **Slot 8** | Bottom Center | Unread Notification Dot / Hydration Tracker | `SHORT_TEXT`, `SMALL_IMAGE` |
+| **Slot 1** | Top Left | Weather (Temperature / Conditions) | `SHORT_TEXT`, `RANGED_VALUE`, `SMALL_IMAGE`, `MONOCHROMATIC_IMAGE` |
+| **Slot 2** | Top Right | UV Index (Sun exposure / UV scale) | `SHORT_TEXT`, `RANGED_VALUE`, `SMALL_IMAGE`, `MONOCHROMATIC_IMAGE` |
+| **Slot 3** | Center Hero Pod | School Bell Period (`com.shieldrj.schoolperiod`) | `SHORT_TEXT`, `RANGED_VALUE`, `LONG_TEXT` |
+| **Slot 4** | Bottom Left | Samsung Health Daily Steps | `SHORT_TEXT`, `GOAL_PROGRESS`, `RANGED_VALUE`, `MONOCHROMATIC_IMAGE` |
+| **Slot 5** | Bottom Center | Samsung Health Heart Rate (Pulse / BPM) | `SHORT_TEXT`, `RANGED_VALUE`, `MONOCHROMATIC_IMAGE` |
+| **Slot 6** | Bottom Right | Watch Battery Level | `SHORT_TEXT`, `RANGED_VALUE`, `MONOCHROMATIC_IMAGE` |
 
 ---
 

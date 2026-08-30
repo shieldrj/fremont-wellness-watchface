@@ -10,12 +10,10 @@
     <string name="theme_midnight">Midnight Teal</string>
 
     <!-- Complication Slot Strings -->
-    <string name="slot_school_schedule">School Schedule</string>
-    <string name="slot_heart_rate">Heart Rate</string>
-    <string name="slot_calendar">Next Event</string>
-    <string name="slot_battery">Battery</string>
-    <string name="slot_steps">Steps</string>
-    <string name="slot_quick_action">Quick Action</string>
     <string name="slot_weather">Weather</string>
-    <string name="slot_subdial_notification">Notifications</string>
+    <string name="slot_uv_index">UV Index</string>
+    <string name="slot_school_schedule">School Schedule</string>
+    <string name="slot_steps">Steps</string>
+    <string name="slot_heart_rate">Heart Rate</string>
+    <string name="slot_battery">Battery</string>
 </resources>
