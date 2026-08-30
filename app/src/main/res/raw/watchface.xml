@@ -26,43 +26,36 @@
 
     <Scene backgroundColor="#ff000000">
 
-        <!-- Outer Accent Bezel Ring -->
+        <!-- Outer Minimalist Accent Bezel & Ticks -->
         <PartDraw x="0" y="0" width="450" height="450">
             <Variant mode="AMBIENT" target="alpha" value="0"/>
-            <Ellipse x="12" y="12" width="426" height="426">
-                <Stroke thickness="4" color="[CONFIGURATION.themeColor.0]"/>
+            <Ellipse x="14" y="14" width="422" height="422">
+                <Stroke thickness="1.5" color="[CONFIGURATION.themeColor.3]"/>
             </Ellipse>
-            <Line startX="225" startY="12" endX="225" endY="24">
-                <Stroke thickness="3" color="[CONFIGURATION.themeColor.1]"/>
+            <Line startX="225" startY="14" endX="225" endY="22">
+                <Stroke thickness="2" color="[CONFIGURATION.themeColor.1]"/>
             </Line>
-            <Line startX="438" startY="225" endX="426" endY="225">
-                <Stroke thickness="3" color="[CONFIGURATION.themeColor.1]"/>
+            <Line startX="428" startY="225" endX="436" endY="225">
+                <Stroke thickness="2" color="[CONFIGURATION.themeColor.1]"/>
             </Line>
-            <Line startX="225" startY="438" endX="225" endY="426">
-                <Stroke thickness="3" color="[CONFIGURATION.themeColor.1]"/>
+            <Line startX="225" startY="428" endX="225" endY="436">
+                <Stroke thickness="2" color="[CONFIGURATION.themeColor.1]"/>
             </Line>
-            <Line startX="12" startY="225" endX="24" endY="225">
-                <Stroke thickness="3" color="[CONFIGURATION.themeColor.1]"/>
+            <Line startX="14" startY="225" endX="22" endY="225">
+                <Stroke thickness="2" color="[CONFIGURATION.themeColor.1]"/>
             </Line>
         </PartDraw>
 
-        <!-- Center Fremont School Shield Emblem -->
-        <PartImage x="195" y="125" width="60" height="60">
-            <Variant mode="AMBIENT" target="alpha" value="70"/>
+        <!-- Fremont High School Shield Emblem (Top Center) -->
+        <PartImage x="203" y="52" width="44" height="44">
+            <Variant mode="AMBIENT" target="alpha" value="0"/>
             <Image resource="school_logo"/>
         </PartImage>
 
-        <!-- Center Digital Clock -->
-        <DigitalClock x="0" y="0" width="450" height="450">
-            <TimeText format="hh:mm" hourFormat="SYNC_TO_DEVICE" align="CENTER" x="0" y="186" width="450" height="64">
-                <Font family="SYNC_TO_DEVICE" size="58" weight="BOLD" color="#ffffffff"/>
-            </TimeText>
-        </DigitalClock>
-
-        <!-- Date & Day of Week -->
-        <PartText x="0" y="258" width="450" height="28">
+        <!-- Date & Day of Week (Aztec Gold Accent) -->
+        <PartText x="0" y="104" width="450" height="24">
             <Text align="CENTER">
-                <Font family="SYNC_TO_DEVICE" size="18" weight="MEDIUM" color="[CONFIGURATION.themeColor.1]">
+                <Font family="SYNC_TO_DEVICE" size="17" weight="BOLD" color="[CONFIGURATION.themeColor.1]">
                     <Template>%s, %s %s
                         <Parameter expression="[DAY_OF_WEEK_S]"/>
                         <Parameter expression="[MONTH_S]"/>
@@ -72,180 +65,225 @@
             </Text>
         </PartText>
 
+        <!-- Center Digital Clock (High-Contrast Bold White) -->
+        <DigitalClock x="0" y="0" width="450" height="450">
+            <TimeText format="hh:mm" hourFormat="SYNC_TO_DEVICE" align="CENTER" x="0" y="132" width="450" height="74">
+                <Font family="SYNC_TO_DEVICE" size="64" weight="BOLD" color="#ffffffff"/>
+            </TimeText>
+        </DigitalClock>
+
         <!-- ================================================================= -->
-        <!-- COMPLICATION SLOT 1: School Bell Period & Countdown (Top Center)  -->
+        <!-- SLOT 1: Weather (Top Left)                                        -->
         <!-- ================================================================= -->
         <ComplicationSlot
             slotId="1"
-            displayName="slot_school_schedule"
-            supportedTypes="SHORT_TEXT RANGED_VALUE LONG_TEXT SMALL_IMAGE MONOCHROMATIC_IMAGE EMPTY"
-            x="125"
-            y="32"
-            width="200"
-            height="70">
-            <BoundingBox x="0" y="0" width="200" height="70" outlinePadding="2.0"/>
+            displayName="slot_weather"
+            supportedTypes="SHORT_TEXT RANGED_VALUE SMALL_IMAGE MONOCHROMATIC_IMAGE EMPTY"
+            x="52"
+            y="62"
+            width="80"
+            height="80">
+            <BoundingOval x="0" y="0" width="80" height="80" outlinePadding="2.0"/>
             <Complication type="SHORT_TEXT">
-                <PartDraw x="0" y="0" width="200" height="70">
-                    <RoundRectangle x="0" y="0" width="200" height="70" cornerRadiusX="16" cornerRadiusY="16">
-                        <Fill color="#122A1E"/>
+                <PartDraw x="0" y="0" width="80" height="80">
+                    <Ellipse x="0" y="0" width="80" height="80">
+                        <Fill color="#141E19"/>
                         <Stroke thickness="1.5" color="[CONFIGURATION.themeColor.3]"/>
-                    </RoundRectangle>
+                    </Ellipse>
                 </PartDraw>
-                <PartText x="0" y="8" width="200" height="30">
+                <PartImage x="26" y="10" width="28" height="28">
+                    <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]"/>
+                </PartImage>
+                <PartText x="0" y="42" width="80" height="26">
                     <Text align="CENTER">
-                        <Font family="SYNC_TO_DEVICE" size="22" weight="BOLD" color="#ffffffff">
-                            <Template>%s<Parameter expression="[COMPLICATION.TEXT]"/></Template>
-                        </Font>
-                    </Text>
-                </PartText>
-                <PartText x="0" y="38" width="200" height="22">
-                    <Text align="CENTER">
-                        <Font family="SYNC_TO_DEVICE" size="14" weight="NORMAL" color="[CONFIGURATION.themeColor.1]">
-                            <Template>%s<Parameter expression="[COMPLICATION.TITLE]"/></Template>
-                        </Font>
-                    </Text>
-                </PartText>
-            </Complication>
-            <Complication type="LONG_TEXT">
-                <PartText x="10" y="10" width="180" height="50">
-                    <Text align="CENTER">
-                        <Font family="SYNC_TO_DEVICE" size="16" weight="MEDIUM" color="#ffffffff">
+                        <Font family="SYNC_TO_DEVICE" size="17" weight="BOLD" color="#ffffffff">
                             <Template>%s<Parameter expression="[COMPLICATION.TEXT]"/></Template>
                         </Font>
                     </Text>
                 </PartText>
             </Complication>
             <Complication type="RANGED_VALUE">
-                <PartText x="0" y="18" width="200" height="34">
+                <PartDraw x="0" y="0" width="80" height="80">
+                    <Ellipse x="0" y="0" width="80" height="80">
+                        <Fill color="#141E19"/>
+                        <Stroke thickness="1.5" color="[CONFIGURATION.themeColor.3]"/>
+                    </Ellipse>
+                </PartDraw>
+                <PartText x="0" y="26" width="80" height="28">
+                    <Text align="CENTER">
+                        <Font family="SYNC_TO_DEVICE" size="17" weight="BOLD" color="#ffffffff">
+                            <Template>%s<Parameter expression="[COMPLICATION.TEXT]"/></Template>
+                        </Font>
+                    </Text>
+                </PartText>
+            </Complication>
+            <Complication type="MONOCHROMATIC_IMAGE">
+                <PartDraw x="0" y="0" width="80" height="80">
+                    <Ellipse x="0" y="0" width="80" height="80">
+                        <Fill color="#141E19"/>
+                        <Stroke thickness="1.5" color="[CONFIGURATION.themeColor.3]"/>
+                    </Ellipse>
+                </PartDraw>
+                <PartImage x="24" y="24" width="32" height="32">
+                    <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]"/>
+                </PartImage>
+            </Complication>
+            <Complication type="SMALL_IMAGE">
+                <PartDraw x="0" y="0" width="80" height="80">
+                    <Ellipse x="0" y="0" width="80" height="80">
+                        <Fill color="#141E19"/>
+                        <Stroke thickness="1.5" color="[CONFIGURATION.themeColor.3]"/>
+                    </Ellipse>
+                </PartDraw>
+                <PartImage x="22" y="22" width="36" height="36">
+                    <Image resource="[COMPLICATION.SMALL_IMAGE]"/>
+                </PartImage>
+            </Complication>
+        </ComplicationSlot>
+
+        <!-- ================================================================= -->
+        <!-- SLOT 2: UV Index (Top Right)                                      -->
+        <!-- ================================================================= -->
+        <ComplicationSlot
+            slotId="2"
+            displayName="slot_uv_index"
+            supportedTypes="SHORT_TEXT RANGED_VALUE SMALL_IMAGE MONOCHROMATIC_IMAGE EMPTY"
+            x="318"
+            y="62"
+            width="80"
+            height="80">
+            <BoundingOval x="0" y="0" width="80" height="80" outlinePadding="2.0"/>
+            <Complication type="SHORT_TEXT">
+                <PartDraw x="0" y="0" width="80" height="80">
+                    <Ellipse x="0" y="0" width="80" height="80">
+                        <Fill color="#141E19"/>
+                        <Stroke thickness="1.5" color="[CONFIGURATION.themeColor.3]"/>
+                    </Ellipse>
+                </PartDraw>
+                <PartImage x="26" y="10" width="28" height="28">
+                    <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]"/>
+                </PartImage>
+                <PartText x="0" y="42" width="80" height="26">
+                    <Text align="CENTER">
+                        <Font family="SYNC_TO_DEVICE" size="17" weight="BOLD" color="#ffffffff">
+                            <Template>%s<Parameter expression="[COMPLICATION.TEXT]"/></Template>
+                        </Font>
+                    </Text>
+                </PartText>
+            </Complication>
+            <Complication type="RANGED_VALUE">
+                <PartDraw x="0" y="0" width="80" height="80">
+                    <Ellipse x="0" y="0" width="80" height="80">
+                        <Fill color="#141E19"/>
+                        <Stroke thickness="1.5" color="[CONFIGURATION.themeColor.3]"/>
+                    </Ellipse>
+                </PartDraw>
+                <PartText x="0" y="26" width="80" height="28">
+                    <Text align="CENTER">
+                        <Font family="SYNC_TO_DEVICE" size="17" weight="BOLD" color="#ffffffff">
+                            <Template>%s<Parameter expression="[COMPLICATION.TEXT]"/></Template>
+                        </Font>
+                    </Text>
+                </PartText>
+            </Complication>
+            <Complication type="MONOCHROMATIC_IMAGE">
+                <PartDraw x="0" y="0" width="80" height="80">
+                    <Ellipse x="0" y="0" width="80" height="80">
+                        <Fill color="#141E19"/>
+                        <Stroke thickness="1.5" color="[CONFIGURATION.themeColor.3]"/>
+                    </Ellipse>
+                </PartDraw>
+                <PartImage x="24" y="24" width="32" height="32">
+                    <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]"/>
+                </PartImage>
+            </Complication>
+            <Complication type="SMALL_IMAGE">
+                <PartDraw x="0" y="0" width="80" height="80">
+                    <Ellipse x="0" y="0" width="80" height="80">
+                        <Fill color="#141E19"/>
+                        <Stroke thickness="1.5" color="[CONFIGURATION.themeColor.3]"/>
+                    </Ellipse>
+                </PartDraw>
+                <PartImage x="22" y="22" width="36" height="36">
+                    <Image resource="[COMPLICATION.SMALL_IMAGE]"/>
+                </PartImage>
+            </Complication>
+        </ComplicationSlot>
+
+        <!-- ================================================================= -->
+        <!-- SLOT 3: School Bell Period Hero Pod (Center)                      -->
+        <!-- ================================================================= -->
+        <ComplicationSlot
+            slotId="3"
+            displayName="slot_school_schedule"
+            supportedTypes="SHORT_TEXT RANGED_VALUE LONG_TEXT SMALL_IMAGE MONOCHROMATIC_IMAGE EMPTY"
+            x="85"
+            y="216"
+            width="280"
+            height="56">
+            <BoundingBox x="0" y="0" width="280" height="56" outlinePadding="2.0"/>
+            <Complication type="SHORT_TEXT">
+                <PartDraw x="0" y="0" width="280" height="56">
+                    <RoundRectangle x="0" y="0" width="280" height="56" cornerRadiusX="16" cornerRadiusY="16">
+                        <Fill color="#0B2618"/>
+                        <Stroke thickness="1.5" color="[CONFIGURATION.themeColor.3]"/>
+                    </RoundRectangle>
+                </PartDraw>
+                <PartText x="0" y="6" width="280" height="26">
                     <Text align="CENTER">
                         <Font family="SYNC_TO_DEVICE" size="20" weight="BOLD" color="#ffffffff">
                             <Template>%s<Parameter expression="[COMPLICATION.TEXT]"/></Template>
                         </Font>
                     </Text>
                 </PartText>
-            </Complication>
-        </ComplicationSlot>
-
-        <!-- ================================================================= -->
-        <!-- COMPLICATION SLOT 2: Heart Rate / Wellness (Top Right)            -->
-        <!-- ================================================================= -->
-        <ComplicationSlot
-            slotId="2"
-            displayName="slot_heart_rate"
-            supportedTypes="SHORT_TEXT RANGED_VALUE SMALL_IMAGE MONOCHROMATIC_IMAGE EMPTY"
-            x="328"
-            y="80"
-            width="80"
-            height="80">
-            <BoundingOval x="0" y="0" width="80" height="80" outlinePadding="2.0"/>
-            <Complication type="SHORT_TEXT">
-                <PartDraw x="0" y="0" width="80" height="80">
-                    <Ellipse x="0" y="0" width="80" height="80">
-                        <Fill color="#1C2321"/>
-                        <Stroke thickness="1.5" color="[CONFIGURATION.themeColor.1]"/>
-                    </Ellipse>
-                </PartDraw>
-                <PartImage x="26" y="10" width="28" height="28">
-                    <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]"/>
-                </PartImage>
-                <PartText x="0" y="42" width="80" height="26">
+                <PartText x="0" y="31" width="280" height="20">
                     <Text align="CENTER">
-                        <Font family="SYNC_TO_DEVICE" size="18" weight="BOLD" color="#ffffffff">
-                            <Template>%s<Parameter expression="[COMPLICATION.TEXT]"/></Template>
+                        <Font family="SYNC_TO_DEVICE" size="13" weight="MEDIUM" color="[CONFIGURATION.themeColor.1]">
+                            <Template>%s<Parameter expression="[COMPLICATION.TITLE]"/></Template>
                         </Font>
                     </Text>
                 </PartText>
             </Complication>
-            <Complication type="RANGED_VALUE">
-                <PartDraw x="0" y="0" width="80" height="80">
-                    <Ellipse x="0" y="0" width="80" height="80">
-                        <Fill color="#1C2321"/>
-                        <Stroke thickness="1.5" color="[CONFIGURATION.themeColor.1]"/>
-                    </Ellipse>
-                </PartDraw>
-                <PartText x="0" y="26" width="80" height="28">
-                    <Text align="CENTER">
-                        <Font family="SYNC_TO_DEVICE" size="18" weight="BOLD" color="#ffffffff">
-                            <Template>%s<Parameter expression="[COMPLICATION.TEXT]"/></Template>
-                        </Font>
-                    </Text>
-                </PartText>
-            </Complication>
-        </ComplicationSlot>
-
-        <!-- ================================================================= -->
-        <!-- COMPLICATION SLOT 3: Next Event / Calendar (Center Right)         -->
-        <!-- ================================================================= -->
-        <ComplicationSlot
-            slotId="3"
-            displayName="slot_calendar"
-            supportedTypes="SHORT_TEXT SMALL_IMAGE MONOCHROMATIC_IMAGE EMPTY"
-            x="358"
-            y="185"
-            width="80"
-            height="80">
-            <BoundingOval x="0" y="0" width="80" height="80" outlinePadding="2.0"/>
-            <Complication type="SHORT_TEXT">
-                <PartDraw x="0" y="0" width="80" height="80">
-                    <Ellipse x="0" y="0" width="80" height="80">
-                        <Fill color="#1C2321"/>
+            <Complication type="LONG_TEXT">
+                <PartDraw x="0" y="0" width="280" height="56">
+                    <RoundRectangle x="0" y="0" width="280" height="56" cornerRadiusX="16" cornerRadiusY="16">
+                        <Fill color="#0B2618"/>
                         <Stroke thickness="1.5" color="[CONFIGURATION.themeColor.3]"/>
-                    </Ellipse>
+                    </RoundRectangle>
                 </PartDraw>
-                <PartImage x="26" y="10" width="28" height="28">
-                    <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]"/>
-                </PartImage>
-                <PartText x="0" y="42" width="80" height="26">
-                    <Text align="CENTER">
-                        <Font family="SYNC_TO_DEVICE" size="16" weight="MEDIUM" color="#ffffffff">
-                            <Template>%s<Parameter expression="[COMPLICATION.TEXT]"/></Template>
-                        </Font>
-                    </Text>
-                </PartText>
-            </Complication>
-        </ComplicationSlot>
-
-        <!-- ================================================================= -->
-        <!-- COMPLICATION SLOT 4: Watch Battery (Bottom Right)                 -->
-        <!-- ================================================================= -->
-        <ComplicationSlot
-            slotId="4"
-            displayName="slot_battery"
-            supportedTypes="SHORT_TEXT RANGED_VALUE SMALL_IMAGE MONOCHROMATIC_IMAGE EMPTY"
-            x="328"
-            y="290"
-            width="80"
-            height="80">
-            <BoundingOval x="0" y="0" width="80" height="80" outlinePadding="2.0"/>
-            <Complication type="SHORT_TEXT">
-                <PartDraw x="0" y="0" width="80" height="80">
-                    <Ellipse x="0" y="0" width="80" height="80">
-                        <Fill color="#1C2321"/>
-                        <Stroke thickness="1.5" color="[CONFIGURATION.themeColor.1]"/>
-                    </Ellipse>
-                </PartDraw>
-                <PartImage x="26" y="10" width="28" height="28">
-                    <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]"/>
-                </PartImage>
-                <PartText x="0" y="42" width="80" height="26">
+                <PartText x="12" y="6" width="256" height="24">
                     <Text align="CENTER">
                         <Font family="SYNC_TO_DEVICE" size="16" weight="BOLD" color="#ffffffff">
                             <Template>%s<Parameter expression="[COMPLICATION.TEXT]"/></Template>
                         </Font>
                     </Text>
                 </PartText>
+                <PartText x="12" y="30" width="256" height="20">
+                    <Text align="CENTER">
+                        <Font family="SYNC_TO_DEVICE" size="13" weight="MEDIUM" color="[CONFIGURATION.themeColor.1]">
+                            <Template>%s<Parameter expression="[COMPLICATION.TITLE]"/></Template>
+                        </Font>
+                    </Text>
+                </PartText>
             </Complication>
             <Complication type="RANGED_VALUE">
-                <PartDraw x="0" y="0" width="80" height="80">
-                    <Ellipse x="0" y="0" width="80" height="80">
-                        <Fill color="#1C2321"/>
-                        <Stroke thickness="1.5" color="[CONFIGURATION.themeColor.1]"/>
-                    </Ellipse>
+                <PartDraw x="0" y="0" width="280" height="56">
+                    <RoundRectangle x="0" y="0" width="280" height="56" cornerRadiusX="16" cornerRadiusY="16">
+                        <Fill color="#0B2618"/>
+                        <Stroke thickness="1.5" color="[CONFIGURATION.themeColor.3]"/>
+                    </RoundRectangle>
                 </PartDraw>
-                <PartText x="0" y="26" width="80" height="28">
+                <PartText x="0" y="6" width="280" height="26">
                     <Text align="CENTER">
-                        <Font family="SYNC_TO_DEVICE" size="18" weight="BOLD" color="#ffffffff">
+                        <Font family="SYNC_TO_DEVICE" size="20" weight="BOLD" color="#ffffffff">
                             <Template>%s<Parameter expression="[COMPLICATION.TEXT]"/></Template>
+                        </Font>
+                    </Text>
+                </PartText>
+                <PartText x="0" y="31" width="280" height="20">
+                    <Text align="CENTER">
+                        <Font family="SYNC_TO_DEVICE" size="13" weight="MEDIUM" color="[CONFIGURATION.themeColor.1]">
+                            <Template>%s<Parameter expression="[COMPLICATION.TITLE]"/></Template>
                         </Font>
                     </Text>
                 </PartText>
@@ -253,22 +291,22 @@
         </ComplicationSlot>
 
         <!-- ================================================================= -->
-        <!-- COMPLICATION SLOT 5: Steps / Active Minutes (Bottom Left)         -->
+        <!-- SLOT 4: Steps / Activity (Bottom Left)                            -->
         <!-- ================================================================= -->
         <ComplicationSlot
-            slotId="5"
+            slotId="4"
             displayName="slot_steps"
             supportedTypes="SHORT_TEXT RANGED_VALUE GOAL_PROGRESS SMALL_IMAGE MONOCHROMATIC_IMAGE EMPTY"
-            x="42"
-            y="290"
+            x="52"
+            y="298"
             width="80"
             height="80">
             <BoundingOval x="0" y="0" width="80" height="80" outlinePadding="2.0"/>
             <Complication type="SHORT_TEXT">
                 <PartDraw x="0" y="0" width="80" height="80">
                     <Ellipse x="0" y="0" width="80" height="80">
-                        <Fill color="#1C2321"/>
-                        <Stroke thickness="1.5" color="[CONFIGURATION.themeColor.1]"/>
+                        <Fill color="#141E19"/>
+                        <Stroke thickness="1.5" color="[CONFIGURATION.themeColor.3]"/>
                     </Ellipse>
                 </PartDraw>
                 <PartImage x="26" y="10" width="28" height="28">
@@ -285,8 +323,8 @@
             <Complication type="GOAL_PROGRESS">
                 <PartDraw x="0" y="0" width="80" height="80">
                     <Ellipse x="0" y="0" width="80" height="80">
-                        <Fill color="#1C2321"/>
-                        <Stroke thickness="1.5" color="[CONFIGURATION.themeColor.1]"/>
+                        <Fill color="#141E19"/>
+                        <Stroke thickness="1.5" color="[CONFIGURATION.themeColor.3]"/>
                     </Ellipse>
                 </PartDraw>
                 <PartText x="0" y="26" width="80" height="28">
@@ -297,67 +335,61 @@
                     </Text>
                 </PartText>
             </Complication>
-        </ComplicationSlot>
-
-        <!-- ================================================================= -->
-        <!-- COMPLICATION SLOT 6: Quick Action / Shortcut (Left)               -->
-        <!-- ================================================================= -->
-        <ComplicationSlot
-            slotId="6"
-            displayName="slot_quick_action"
-            supportedTypes="SHORT_TEXT SMALL_IMAGE MONOCHROMATIC_IMAGE EMPTY"
-            x="12"
-            y="185"
-            width="80"
-            height="80">
-            <BoundingOval x="0" y="0" width="80" height="80" outlinePadding="2.0"/>
-            <Complication type="SMALL_IMAGE">
+            <Complication type="RANGED_VALUE">
                 <PartDraw x="0" y="0" width="80" height="80">
                     <Ellipse x="0" y="0" width="80" height="80">
-                        <Fill color="#1C2321"/>
+                        <Fill color="#141E19"/>
                         <Stroke thickness="1.5" color="[CONFIGURATION.themeColor.3]"/>
                     </Ellipse>
                 </PartDraw>
-                <PartImage x="20" y="20" width="40" height="40">
-                    <Image resource="[COMPLICATION.SMALL_IMAGE]"/>
-                </PartImage>
-            </Complication>
-            <Complication type="SHORT_TEXT">
-                <PartDraw x="0" y="0" width="80" height="80">
-                    <Ellipse x="0" y="0" width="80" height="80">
-                        <Fill color="#1C2321"/>
-                        <Stroke thickness="1.5" color="[CONFIGURATION.themeColor.3]"/>
-                    </Ellipse>
-                </PartDraw>
-                <PartImage x="26" y="10" width="28" height="28">
-                    <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]"/>
-                </PartImage>
-                <PartText x="0" y="42" width="80" height="26">
+                <PartText x="0" y="26" width="80" height="28">
                     <Text align="CENTER">
-                        <Font family="SYNC_TO_DEVICE" size="15" weight="MEDIUM" color="#ffffffff">
+                        <Font family="SYNC_TO_DEVICE" size="16" weight="BOLD" color="#ffffffff">
                             <Template>%s<Parameter expression="[COMPLICATION.TEXT]"/></Template>
                         </Font>
                     </Text>
                 </PartText>
             </Complication>
+            <Complication type="MONOCHROMATIC_IMAGE">
+                <PartDraw x="0" y="0" width="80" height="80">
+                    <Ellipse x="0" y="0" width="80" height="80">
+                        <Fill color="#141E19"/>
+                        <Stroke thickness="1.5" color="[CONFIGURATION.themeColor.3]"/>
+                    </Ellipse>
+                </PartDraw>
+                <PartImage x="24" y="24" width="32" height="32">
+                    <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]"/>
+                </PartImage>
+            </Complication>
+            <Complication type="SMALL_IMAGE">
+                <PartDraw x="0" y="0" width="80" height="80">
+                    <Ellipse x="0" y="0" width="80" height="80">
+                        <Fill color="#141E19"/>
+                        <Stroke thickness="1.5" color="[CONFIGURATION.themeColor.3]"/>
+                    </Ellipse>
+                </PartDraw>
+                <PartImage x="22" y="22" width="36" height="36">
+                    <Image resource="[COMPLICATION.SMALL_IMAGE]"/>
+                </PartImage>
+            </Complication>
         </ComplicationSlot>
 
         <!-- ================================================================= -->
-        <!-- COMPLICATION SLOT 7: Weather / UV Index (Top Left)                -->
+        <!-- SLOT 5: Heart Rate / Wellness Biometric (Bottom Center)           -->
         <!-- ================================================================= -->
         <ComplicationSlot
-            slotId="7"
-            displayName="slot_weather"
+            slotId="5"
+            displayName="slot_heart_rate"
             supportedTypes="SHORT_TEXT RANGED_VALUE SMALL_IMAGE MONOCHROMATIC_IMAGE EMPTY"
-            x="42"
-            y="80"
+            x="185"
+            y="332"
             width="80"
             height="80">
             <BoundingOval x="0" y="0" width="80" height="80" outlinePadding="2.0"/>
             <Complication type="SHORT_TEXT">
                 <PartDraw x="0" y="0" width="80" height="80">
                     <Ellipse x="0" y="0" width="80" height="80">
-                        <Fill color="#1C2321"/>
+                        <Fill color="#141E19"/>
                         <Stroke thickness="1.5" color="[CONFIGURATION.themeColor.1]"/>
                     </Ellipse>
                 </PartDraw>
@@ -375,7 +407,7 @@
             <Complication type="RANGED_VALUE">
                 <PartDraw x="0" y="0" width="80" height="80">
                     <Ellipse x="0" y="0" width="80" height="80">
-                        <Fill color="#1C2321"/>
+                        <Fill color="#141E19"/>
                         <Stroke thickness="1.5" color="[CONFIGURATION.themeColor.1]"/>
                     </Ellipse>
                 </PartDraw>
@@ -387,24 +419,46 @@
                     </Text>
                 </PartText>
             </Complication>
+            <Complication type="MONOCHROMATIC_IMAGE">
+                <PartDraw x="0" y="0" width="80" height="80">
+                    <Ellipse x="0" y="0" width="80" height="80">
+                        <Fill color="#141E19"/>
+                        <Stroke thickness="1.5" color="[CONFIGURATION.themeColor.1]"/>
+                    </Ellipse>
+                </PartDraw>
+                <PartImage x="24" y="24" width="32" height="32">
+                    <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]"/>
+                </PartImage>
+            </Complication>
+            <Complication type="SMALL_IMAGE">
+                <PartDraw x="0" y="0" width="80" height="80">
+                    <Ellipse x="0" y="0" width="80" height="80">
+                        <Fill color="#141E19"/>
+                        <Stroke thickness="1.5" color="[CONFIGURATION.themeColor.1]"/>
+                    </Ellipse>
+                </PartDraw>
+                <PartImage x="22" y="22" width="36" height="36">
+                    <Image resource="[COMPLICATION.SMALL_IMAGE]"/>
+                </PartImage>
+            </Complication>
         </ComplicationSlot>
 
         <!-- ================================================================= -->
-        <!-- COMPLICATION SLOT 8: Sub-Dial / Notification Dot (Bottom Center)  -->
+        <!-- SLOT 6: Watch Battery (Bottom Right)                              -->
         <!-- ================================================================= -->
         <ComplicationSlot
-            slotId="8"
-            displayName="slot_subdial_notification"
-            supportedTypes="SHORT_TEXT SMALL_IMAGE MONOCHROMATIC_IMAGE EMPTY"
-            x="185"
-            y="350"
+            slotId="6"
+            displayName="slot_battery"
+            supportedTypes="SHORT_TEXT RANGED_VALUE SMALL_IMAGE MONOCHROMATIC_IMAGE EMPTY"
+            x="318"
+            y="298"
             width="80"
             height="80">
             <BoundingOval x="0" y="0" width="80" height="80" outlinePadding="2.0"/>
             <Complication type="SHORT_TEXT">
                 <PartDraw x="0" y="0" width="80" height="80">
                     <Ellipse x="0" y="0" width="80" height="80">
-                        <Fill color="#122A1E"/>
+                        <Fill color="#141E19"/>
                         <Stroke thickness="1.5" color="[CONFIGURATION.themeColor.3]"/>
                     </Ellipse>
                 </PartDraw>
@@ -419,14 +473,40 @@
                     </Text>
                 </PartText>
             </Complication>
-            <Complication type="SMALL_IMAGE">
+            <Complication type="RANGED_VALUE">
                 <PartDraw x="0" y="0" width="80" height="80">
                     <Ellipse x="0" y="0" width="80" height="80">
-                        <Fill color="#122A1E"/>
+                        <Fill color="#141E19"/>
                         <Stroke thickness="1.5" color="[CONFIGURATION.themeColor.3]"/>
                     </Ellipse>
                 </PartDraw>
-                <PartImage x="20" y="20" width="40" height="40">
+                <PartText x="0" y="26" width="80" height="28">
+                    <Text align="CENTER">
+                        <Font family="SYNC_TO_DEVICE" size="17" weight="BOLD" color="#ffffffff">
+                            <Template>%s<Parameter expression="[COMPLICATION.TEXT]"/></Template>
+                        </Font>
+                    </Text>
+                </PartText>
+            </Complication>
+            <Complication type="MONOCHROMATIC_IMAGE">
+                <PartDraw x="0" y="0" width="80" height="80">
+                    <Ellipse x="0" y="0" width="80" height="80">
+                        <Fill color="#141E19"/>
+                        <Stroke thickness="1.5" color="[CONFIGURATION.themeColor.3]"/>
+                    </Ellipse>
+                </PartDraw>
+                <PartImage x="24" y="24" width="32" height="32">
+                    <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]"/>
+                </PartImage>
+            </Complication>
+            <Complication type="SMALL_IMAGE">
+                <PartDraw x="0" y="0" width="80" height="80">
+                    <Ellipse x="0" y="0" width="80" height="80">
+                        <Fill color="#141E19"/>
+                        <Stroke thickness="1.5" color="[CONFIGURATION.themeColor.3]"/>
+                    </Ellipse>
+                </PartDraw>
+                <PartImage x="22" y="22" width="36" height="36">
                     <Image resource="[COMPLICATION.SMALL_IMAGE]"/>
                 </PartImage>
             </Complication>

@@ -32,7 +32,7 @@ class WatchFaceConfigTest {
         val doc = builder.parse(watchFaceFile)
 
         val slots = doc.getElementsByTagName("ComplicationSlot")
-        assertEquals("Must configure exactly 8 complication slots", 8, slots.length)
+        assertEquals("Must configure exactly 6 complication slots", 6, slots.length)
 
         val slotIds = mutableSetOf<Int>()
         for (i in 0 until slots.length) {
@@ -41,7 +41,7 @@ class WatchFaceConfigTest {
             val slotIdStr = attrs.getNamedItem("slotId")?.nodeValue
             assertNotNull("Slot ID must not be null", slotIdStr)
             val slotId = slotIdStr!!.toInt()
-            assertTrue("Slot ID must be between 1 and 8", slotId in 1..8)
+            assertTrue("Slot ID must be between 1 and 6", slotId in 1..6)
             assertTrue("Slot ID must be unique", slotIds.add(slotId))
 
             val x = attrs.getNamedItem("x")?.nodeValue?.toInt() ?: -1
