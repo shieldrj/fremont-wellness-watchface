@@ -32,7 +32,7 @@ class WatchFaceConfigTest {
         val doc = builder.parse(watchFaceFile)
 
         val slots = doc.getElementsByTagName("ComplicationSlot")
-        assertEquals("Must configure exactly 6 complication slots", 6, slots.length)
+        assertEquals("Must configure exactly 4 complication slots", 4, slots.length)
 
         val slotIds = mutableSetOf<Int>()
         for (i in 0 until slots.length) {
@@ -41,7 +41,7 @@ class WatchFaceConfigTest {
             val slotIdStr = attrs.getNamedItem("slotId")?.nodeValue
             assertNotNull("Slot ID must not be null", slotIdStr)
             val slotId = slotIdStr!!.toInt()
-            assertTrue("Slot ID must be between 1 and 6", slotId in 1..6)
+            assertTrue("Slot ID must be between 1 and 4", slotId in 1..4)
             assertTrue("Slot ID must be unique", slotIds.add(slotId))
 
             val x = attrs.getNamedItem("x")?.nodeValue?.toInt() ?: -1
@@ -224,6 +224,75 @@ class WatchFaceConfigTest {
         assertTrue(
             "src/main/java must stay empty - watch face bundles cannot contain code",
             !mainSources.exists() || mainSources.walkTopDown().none { it.isFile }
+        )
+    }
+
+    /**
+     * Every drawable the watch face names must exist, and every drawable that
+     * ships must be drawn. The previous design kept the school crest in the
+     * bundle without ever referencing it, so the logo never reached the dial
+     * while still costing bundle memory.
+     */
+    @Test
+    fun testDrawablesAreReferencedAndPresent() {
+        val watchFace = File("src/main/res/raw/watchface.xml").readText()
+        val referenced = Regex("""@drawable/(\w+)""").findAll(watchFace)
+            .map { it.groupValues[1] }
+            .toSet()
+        assertTrue("The watch face must draw the school crest", "school_logo" in referenced)
+
+        val drawables = File("src/main/res/drawable")
+            .listFiles { f -> f.extension == "png" }
+            .orEmpty()
+            .map { it.nameWithoutExtension }
+            .toSet()
+        assertEquals(
+            "watchface.xml names a drawable that is not in res/drawable",
+            emptySet<String>(),
+            referenced - drawables
+        )
+        // preview.png is named by watch_face_info.xml, not by the dial itself.
+        assertEquals(
+            "res/drawable ships a PNG the watch face never draws",
+            emptySet<String>(),
+            drawables - referenced - setOf("preview")
+        )
+    }
+
+    /**
+     * displayName and screenReaderText hold string resource names, not literal
+     * text. A name with no matching <string> shows up blank in the watch's
+     * Customize screen rather than failing the build.
+     */
+    @Test
+    fun testDisplayNamesResolveToStringResources() {
+        val watchFace = File("src/main/res/raw/watchface.xml").readText()
+        val declared = Regex("""<string name="(\w+)"""")
+            .findAll(File("src/main/res/values/strings.xml").readText())
+            .map { it.groupValues[1] }
+            .toSet()
+        val used = Regex("""(?:displayName|screenReaderText)="(\w+)"""")
+            .findAll(watchFace)
+            .map { it.groupValues[1] }
+            .toSet()
+        assertTrue("Expected the watch face to name string resources", used.isNotEmpty())
+        assertEquals("Unresolved string resource names", emptySet<String>(), used - declared)
+    }
+
+    /**
+     * The crest is scaled down to roughly 90px on a 450px dial. Shipping the
+     * full 827x708 source art would cost about 2.3MB of the bundle's memory
+     * budget to draw something an eighth of that size.
+     */
+    @Test
+    fun testCrestIsSizedForTheDial() {
+        // A PNG header puts the image width in bytes 16..19, big endian.
+        val header = File("src/main/res/drawable/school_logo.png").readBytes()
+        val width = (16..19).fold(0) { acc, i -> (acc shl 8) or (header[i].toInt() and 0xFF) }
+        assertTrue(
+            "school_logo.png is ${width}px wide; it is drawn at 90px, so " +
+                "anything past 2x is wasted bundle memory",
+            width <= 200
         )
     }
 }
