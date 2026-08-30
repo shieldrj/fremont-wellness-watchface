@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Fremont Wellness Watch Face</string>
+    <string name="watch_face_name">Fremont Wellness Watch Face</string>
+    <string name="watch_face_description">Custom high-density Wear OS watch face for the Fremont Academy Wellness Center featuring bell schedule complications, health metrics, and school branding.</string>
+
+    <!-- Complication Slot Names -->
+    <string name="slot_school_schedule">School Schedule / Bell Period</string>
+    <string name="slot_heart_rate">Heart Rate / Wellness</string>
+    <string name="slot_calendar">Next Event / Appointment</string>
+    <string name="slot_battery">Watch Battery</string>
+    <string name="slot_steps">Campus Steps / Activity</string>
+    <string name="slot_weather">Weather / Outdoor Conditions</string>
+    <string name="slot_quick_action">Quick Action / Wellness Shortcut</string>
+    <string name="slot_subdial_notification">Center Sub-Dial / Notification</string>
+
+    <!-- Configuration Options -->
+    <string name="config_color_theme">Color Theme</string>
+    <string name="config_color_fremont_green">Fremont Green &amp; Gold</string>
+    <string name="config_color_tactical">Tactical Slate</string>
+    <string name="config_color_midnight">Midnight Teal</string>
+    <string name="config_show_seconds">Show Seconds Ring</string>
+</resources>
+
