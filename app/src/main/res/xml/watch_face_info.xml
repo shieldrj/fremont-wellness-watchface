@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<WatchFaceInfo xmlns:android="http://schemas.android.com/apk/res/android">
-    <Preview>@drawable/watch_preview</Preview>
-    <Category>@string/watch_face_name</Category>
-    <Editable>true</Editable>
+<WatchFaceInfo>
+    <Preview value="@drawable/preview" />
 </WatchFaceInfo>

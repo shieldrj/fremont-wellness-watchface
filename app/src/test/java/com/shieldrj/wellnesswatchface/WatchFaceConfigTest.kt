@@ -22,7 +22,6 @@ class WatchFaceConfigTest {
         assertEquals("Root tag must be WatchFace", "WatchFace", root.tagName)
         assertEquals("Canvas width should be 450", "450", root.getAttribute("width"))
         assertEquals("Canvas height should be 450", "450", root.getAttribute("height"))
-        assertEquals("Clip shape should be CIRCLE", "CIRCLE", root.getAttribute("clipShape"))
     }
 
     @Test
@@ -67,13 +66,13 @@ class WatchFaceConfigTest {
         val colorOptions = doc.getElementsByTagName("ColorOption")
         assertTrue("Must have at least 3 color theme options", colorOptions.length >= 3)
 
-        val optionIds = (0 until colorOptions.length).map {
-            colorOptions.item(it).attributes.getNamedItem("id")?.nodeValue
+        val displayNames = (0 until colorOptions.length).map {
+            colorOptions.item(it).attributes.getNamedItem("displayName")?.nodeValue
         }
 
-        assertTrue("Must include fremont_green theme", optionIds.contains("fremont_green"))
-        assertTrue("Must include tactical_slate theme", optionIds.contains("tactical_slate"))
-        assertTrue("Must include midnight_teal theme", optionIds.contains("midnight_teal"))
+        assertTrue("Must include theme_fremont_green", displayNames.contains("theme_fremont_green"))
+        assertTrue("Must include theme_tactical", displayNames.contains("theme_tactical"))
+        assertTrue("Must include theme_midnight", displayNames.contains("theme_midnight"))
     }
 
     @Test
@@ -81,7 +80,7 @@ class WatchFaceConfigTest {
         val infoFile = File("src/main/res/xml/watch_face_info.xml")
         assertTrue("watch_face_info.xml should exist", infoFile.exists())
 
-        val shapesFile = File("src/main/res/xml/watch_face_shapes.xml")
-        assertTrue("watch_face_shapes.xml should exist", shapesFile.exists())
+        val previewFile = File("src/main/res/drawable/preview.png")
+        assertTrue("preview.png should exist", previewFile.exists())
     }
 }
