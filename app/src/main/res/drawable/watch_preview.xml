@@ -51,13 +51,6 @@
         android:strokeWidth="1.5"
         android:pathData="M52,225 m-30,0 a30,30 0 1,0 60,0 a30,30 0 1,0 -60,0" />
 
-    <!-- Center School Crest Emblem Background Ring -->
-    <path
-        android:strokeColor="#FFC72C"
-        android:strokeWidth="1"
-        android:fillColor="#0A3820"
-        android:pathData="M225,160 m-28,0 a28,28 0 1,0 56,0 a28,28 0 1,0 -56,0" />
-
     <!-- Complication Slot 3 (Right: Next Event / Calendar) -->
     <path
         android:fillColor="#1C2321"
@@ -87,4 +80,3 @@
         android:pathData="M225,385 m-26,0 a26,26 0 1,0 52,0 a26,26 0 1,0 -52,0" />
 
 </vector>
-
