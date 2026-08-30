@@ -75,5 +75,13 @@ class WatchFaceConfigTest {
         assertTrue("Must include tactical_slate theme", optionIds.contains("tactical_slate"))
         assertTrue("Must include midnight_teal theme", optionIds.contains("midnight_teal"))
     }
-}
 
+    @Test
+    fun testWatchFaceInfoAndShapesXml() {
+        val infoFile = File("src/main/res/xml/watch_face_info.xml")
+        assertTrue("watch_face_info.xml should exist", infoFile.exists())
+
+        val shapesFile = File("src/main/res/xml/watch_face_shapes.xml")
+        assertTrue("watch_face_shapes.xml should exist", shapesFile.exists())
+    }
+}
