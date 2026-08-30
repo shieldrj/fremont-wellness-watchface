@@ -13,8 +13,6 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0.0"
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -41,12 +39,12 @@ android {
 }
 
 dependencies {
-    // Wear OS Core and Complications API
-    implementation("androidx.wear:wear:1.3.0")
-    implementation("androidx.wear.watchface:watchface-complications-data-source-ktx:1.2.1")
+    // A Watch Face Format bundle must be resource-only: no application code and no
+    // code dependencies. Anything added here lands in classes.dex and contradicts
+    // android:hasCode="false" in the manifest.
 
-    // Unit Testing
+    // Unit tests only - these do not ship in the APK.
+    testImplementation(kotlin("stdlib"))
     testImplementation("junit:junit:4.13.2")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0")
 }
 
