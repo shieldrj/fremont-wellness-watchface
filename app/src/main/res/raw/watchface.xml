@@ -126,13 +126,13 @@
         <!-- strokes are the standard guard against OLED burn-in.               -->
         <!-- ================================================================= -->
         <DigitalClock x="0" y="136" width="450" height="104">
-            <TimeText format="hh:mm" hourFormat="SYNC_TO_DEVICE" align="CENTER"
+            <TimeText format="h:mm" hourFormat="SYNC_TO_DEVICE" align="CENTER"
                       x="0" y="0" width="450" height="104">
                 <Variant mode="AMBIENT" target="alpha" value="0"/>
                 <Font family="SYNC_TO_DEVICE" size="88" weight="BOLD"
                       color="[CONFIGURATION.themeColor.2]"/>
             </TimeText>
-            <TimeText format="hh:mm" hourFormat="SYNC_TO_DEVICE" align="CENTER"
+            <TimeText format="h:mm" hourFormat="SYNC_TO_DEVICE" align="CENTER"
                       x="0" y="0" width="450" height="104" alpha="0">
                 <Variant mode="AMBIENT" target="alpha" value="255"/>
                 <Font family="SYNC_TO_DEVICE" size="88" weight="LIGHT"
@@ -377,9 +377,9 @@
                                    value="-140 + (((clamp([COMPLICATION.RANGED_VALUE_VALUE], [COMPLICATION.RANGED_VALUE_MIN], [COMPLICATION.RANGED_VALUE_MAX]) - [COMPLICATION.RANGED_VALUE_MIN]) / ([COMPLICATION.RANGED_VALUE_MAX] - [COMPLICATION.RANGED_VALUE_MIN])) * 280)"/>
                     </Arc>
                 </PartDraw>
-                <PartText x="0" y="24" width="74" height="26">
+                <PartText x="9" y="24" width="56" height="26">
                     <Text align="CENTER" ellipsis="TRUE">
-                        <Font family="SYNC_TO_DEVICE" size="19" weight="BOLD"
+                        <Font family="SYNC_TO_DEVICE" size="17" weight="BOLD"
                               color="[CONFIGURATION.themeColor.2]">
                             <Template>%s<Parameter expression="[COMPLICATION.TEXT]"/></Template>
                         </Font>
@@ -400,9 +400,9 @@
                                    value="-140 + (clamp([COMPLICATION.GOAL_PROGRESS_VALUE], 0, [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) * 280"/>
                     </Arc>
                 </PartDraw>
-                <PartText x="0" y="24" width="74" height="26">
+                <PartText x="9" y="24" width="56" height="26">
                     <Text align="CENTER" ellipsis="TRUE">
-                        <Font family="SYNC_TO_DEVICE" size="19" weight="BOLD"
+                        <Font family="SYNC_TO_DEVICE" size="17" weight="BOLD"
                               color="[CONFIGURATION.themeColor.2]">
                             <Template>%s<Parameter expression="[COMPLICATION.TEXT]"/></Template>
                         </Font>
@@ -490,9 +490,9 @@
                                    value="-140 + (((clamp([COMPLICATION.RANGED_VALUE_VALUE], [COMPLICATION.RANGED_VALUE_MIN], [COMPLICATION.RANGED_VALUE_MAX]) - [COMPLICATION.RANGED_VALUE_MIN]) / ([COMPLICATION.RANGED_VALUE_MAX] - [COMPLICATION.RANGED_VALUE_MIN])) * 280)"/>
                     </Arc>
                 </PartDraw>
-                <PartText x="0" y="24" width="74" height="26">
+                <PartText x="9" y="24" width="56" height="26">
                     <Text align="CENTER" ellipsis="TRUE">
-                        <Font family="SYNC_TO_DEVICE" size="19" weight="BOLD"
+                        <Font family="SYNC_TO_DEVICE" size="17" weight="BOLD"
                               color="[CONFIGURATION.themeColor.2]">
                             <Template>%s<Parameter expression="[COMPLICATION.TEXT]"/></Template>
                         </Font>
@@ -513,9 +513,9 @@
                                    value="-140 + (clamp([COMPLICATION.GOAL_PROGRESS_VALUE], 0, [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) * 280"/>
                     </Arc>
                 </PartDraw>
-                <PartText x="0" y="24" width="74" height="26">
+                <PartText x="9" y="24" width="56" height="26">
                     <Text align="CENTER" ellipsis="TRUE">
-                        <Font family="SYNC_TO_DEVICE" size="19" weight="BOLD"
+                        <Font family="SYNC_TO_DEVICE" size="17" weight="BOLD"
                               color="[CONFIGURATION.themeColor.2]">
                             <Template>%s<Parameter expression="[COMPLICATION.TEXT]"/></Template>
                         </Font>
@@ -603,9 +603,9 @@
                                    value="-140 + (((clamp([COMPLICATION.RANGED_VALUE_VALUE], [COMPLICATION.RANGED_VALUE_MIN], [COMPLICATION.RANGED_VALUE_MAX]) - [COMPLICATION.RANGED_VALUE_MIN]) / ([COMPLICATION.RANGED_VALUE_MAX] - [COMPLICATION.RANGED_VALUE_MIN])) * 280)"/>
                     </Arc>
                 </PartDraw>
-                <PartText x="0" y="24" width="74" height="26">
+                <PartText x="9" y="24" width="56" height="26">
                     <Text align="CENTER" ellipsis="TRUE">
-                        <Font family="SYNC_TO_DEVICE" size="19" weight="BOLD"
+                        <Font family="SYNC_TO_DEVICE" size="17" weight="BOLD"
                               color="[CONFIGURATION.themeColor.2]">
                             <Template>%s<Parameter expression="[COMPLICATION.TEXT]"/></Template>
                         </Font>
@@ -626,9 +626,9 @@
                                    value="-140 + (clamp([COMPLICATION.GOAL_PROGRESS_VALUE], 0, [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) * 280"/>
                     </Arc>
                 </PartDraw>
-                <PartText x="0" y="24" width="74" height="26">
+                <PartText x="9" y="24" width="56" height="26">
                     <Text align="CENTER" ellipsis="TRUE">
-                        <Font family="SYNC_TO_DEVICE" size="19" weight="BOLD"
+                        <Font family="SYNC_TO_DEVICE" size="17" weight="BOLD"
                               color="[CONFIGURATION.themeColor.2]">
                             <Template>%s<Parameter expression="[COMPLICATION.TEXT]"/></Template>
                         </Font>
