@@ -1,29 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Fremont Crest.
+    Fremont Wellness Watch Face - Luxury Instrument Edition.
 
-    One vertical column, read top to bottom: the school crest, the date, the time,
-    the current class period, then three small readouts. Nothing is boxed in and
-    nothing overlaps, so an empty complication leaves clean space rather than an
-    empty grey circle.
+    Curated layout for Robert's workday at the Fremont Academy Wellness Center.
+    Built with Watch Face Format (WFF v2) for Galaxy Watch 7 / Wear OS 5.
 
-    The dial is black. Colour appears only where it carries meaning: the crest,
-    the gold date line, the period capsule and the battery gauge on the rim.
+    Visual Hierarchy (450x450 canvas):
+        16 -  99   High-DPI Fremont Crest
+       103 - 127   Gold letterspaced Date
+       128 - 224   Bold Digital Time (Light in Ambient for OLED protection)
+       236 - 290   Cockpit-Grade School Period Pod (Slot 1)
+       302 - 388   Three Instrument Sub-Dial Complications (Slots 2, 3, 4)
+       Outer Rim   Integrated Bezel Ring & Battery Gauge at 6 o'clock
 
-    Vertical rhythm (450x450 canvas):
-        20 - 104   crest
-       108 - 132   date
-       136 - 240   time
-       252 - 302   period capsule
-       312 - 386   three small complications
-       rim         battery gauge, centred on 6 o'clock
-
-    themeColor slots, in order:
-        .0 surface   capsule fill
-        .1 accent    date, gauges, period countdown
-        .2 primary   time and complication values
-        .3 muted     secondary labels and icons
-        .4 hairline  rim ring and gauge tracks
+    themeColor slots:
+        .0 surface   sub-dial plates and capsule background
+        .1 accent    Aztec gold date, active gauge arcs, countdown timers
+        .2 primary   bold time and primary metrics (crisp white)
+        .3 muted     icons and secondary labels
+        .4 hairline  bezel ring and inactive gauge tracks
 -->
 <WatchFace width="450" height="450" clipShape="CIRCLE">
     <Metadata key="CLOCK_TYPE" value="DIGITAL"/>
@@ -38,37 +33,36 @@
             <ColorOption
                 id="0"
                 displayName="theme_fremont_green"
-                colors="#0E4D2D #FFC72C #FFF8E7 #7FA391 #1B3D2C" />
+                colors="#0E3F27 #FFC72C #FFFFFF #8DAF9E #1A4D35" />
             <ColorOption
                 id="1"
                 displayName="theme_tactical"
-                colors="#242C29 #E6A817 #EDEFEE #93A29B #333D39" />
+                colors="#1C2422 #F59E0B #F8FAFC #94A3B8 #334155" />
             <ColorOption
                 id="2"
                 displayName="theme_midnight"
-                colors="#0D2E2B #35C4A8 #E8F5F2 #82A8A2 #12433D" />
+                colors="#0D2E2B #2DD4BF #F0FDFA #5EEAD4 #134E4A" />
         </ColorConfiguration>
     </UserConfigurations>
 
     <Scene backgroundColor="#ff000000">
 
         <!-- ================================================================= -->
-        <!-- Dial: a near-black vignette so the face has depth without lighting -->
-        <!-- up pixels. Dropped entirely in ambient.                           -->
+        <!-- Dial Background: Soft luxury vignette for OLED depth               -->
         <!-- ================================================================= -->
         <PartDraw x="0" y="0" width="450" height="450">
             <Variant mode="AMBIENT" target="alpha" value="0"/>
             <Ellipse x="0" y="0" width="450" height="450">
                 <Fill color="#FF000000">
                     <RadialGradient
-                        centerX="225" centerY="140" radius="300"
-                        colors="#FF141B17 #FF0A0E0C #FF000000"
-                        positions="0.0 0.45 1.0" />
+                        centerX="225" centerY="130" radius="280"
+                        colors="#FF132219 #FF09130E #FF000000"
+                        positions="0.0 0.50 1.0" />
                 </Fill>
             </Ellipse>
         </PartDraw>
 
-        <!-- Rim ring. -->
+        <!-- Outer Bezel Ring -->
         <PartDraw x="0" y="0" width="450" height="450">
             <Variant mode="AMBIENT" target="alpha" value="0"/>
             <Ellipse x="10" y="10" width="430" height="430">
@@ -77,41 +71,39 @@
         </PartDraw>
 
         <!-- ================================================================= -->
-        <!-- Watch battery, as a gauge sitting on the rim at 6 o'clock.         -->
-        <!-- 145 degrees is empty and 215 is full; 0 degrees is 12 o'clock.     -->
+        <!-- Watch Battery: Integrated Bezel Gauge at 6 o'clock                -->
+        <!-- 145 deg (Empty) to 215 deg (Full); 0 deg is 12 o'clock            -->
         <!-- ================================================================= -->
-        <PartDraw x="0" y="0" width="450" height="450" alpha="80">
+        <PartDraw x="0" y="0" width="450" height="450" alpha="90">
             <Variant mode="AMBIENT" target="alpha" value="0"/>
             <Arc centerX="225" centerY="225" width="430" height="430"
                  startAngle="145" endAngle="215">
-                <Stroke thickness="4" color="[CONFIGURATION.themeColor.3]" cap="ROUND"/>
+                <Stroke thickness="4.5" color="[CONFIGURATION.themeColor.4]" cap="ROUND"/>
             </Arc>
         </PartDraw>
-        <PartDraw x="0" y="0" width="450" height="450" alpha="230">
+        <PartDraw x="0" y="0" width="450" height="450" alpha="255">
             <Variant mode="AMBIENT" target="alpha" value="90"/>
             <Arc centerX="225" centerY="225" width="430" height="430"
                  startAngle="145" endAngle="215">
-                <Stroke thickness="4" color="[CONFIGURATION.themeColor.1]" cap="ROUND"/>
+                <Stroke thickness="4.5" color="[CONFIGURATION.themeColor.1]" cap="ROUND"/>
                 <Transform target="endAngle"
                            value="145 + (clamp([BATTERY_PERCENT], 0, 100) / 100) * 70"/>
             </Arc>
         </PartDraw>
 
         <!-- ================================================================= -->
-        <!-- School crest. The one piece of full colour on the dial, so it is   -->
-        <!-- what the eye lands on first. Dimmed, not hidden, in ambient.       -->
+        <!-- School Crest: Sharp High-DPI Vector Emblem                        -->
         <!-- ================================================================= -->
-        <PartImage x="173" y="20" width="104" height="84">
-            <Variant mode="AMBIENT" target="alpha" value="110"/>
+        <PartImage x="175" y="16" width="100" height="83">
+            <Variant mode="AMBIENT" target="alpha" value="90"/>
             <Image resource="@drawable/school_logo"/>
         </PartImage>
 
-        <!-- Date, in the accent colour and letterspaced so it reads as a label
-             rather than as another line of data. -->
-        <PartText x="0" y="108" width="450" height="26">
+        <!-- Date Line: Letterspaced Aztec Gold -->
+        <PartText x="0" y="103" width="450" height="24">
             <Text align="CENTER">
-                <Font family="SYNC_TO_DEVICE" size="17" weight="MEDIUM"
-                      letterSpacing="0.12" color="[CONFIGURATION.themeColor.1]">
+                <Font family="SYNC_TO_DEVICE" size="16" weight="BOLD"
+                      letterSpacing="0.14" color="[CONFIGURATION.themeColor.1]">
                     <Template>%s · %s %s
                         <Parameter expression="[DAY_OF_WEEK_S]"/>
                         <Parameter expression="[MONTH_S]"/>
@@ -122,38 +114,35 @@
         </PartText>
 
         <!-- ================================================================= -->
-        <!-- Time. Bold when the screen is awake, light in ambient: thinner     -->
-        <!-- strokes are the standard guard against OLED burn-in.               -->
+        <!-- Time Display: Bold in Active, Light in Ambient for Burn-in Safety  -->
         <!-- ================================================================= -->
-        <DigitalClock x="0" y="136" width="450" height="104">
+        <DigitalClock x="0" y="128" width="450" height="98">
             <TimeText format="h:mm" hourFormat="SYNC_TO_DEVICE" align="CENTER"
-                      x="0" y="0" width="450" height="104">
+                      x="0" y="0" width="450" height="98">
                 <Variant mode="AMBIENT" target="alpha" value="0"/>
-                <Font family="SYNC_TO_DEVICE" size="88" weight="BOLD"
+                <Font family="SYNC_TO_DEVICE" size="86" weight="BOLD"
                       color="[CONFIGURATION.themeColor.2]"/>
             </TimeText>
             <TimeText format="h:mm" hourFormat="SYNC_TO_DEVICE" align="CENTER"
-                      x="0" y="0" width="450" height="104" alpha="0">
+                      x="0" y="0" width="450" height="98" alpha="0">
                 <Variant mode="AMBIENT" target="alpha" value="255"/>
-                <Font family="SYNC_TO_DEVICE" size="88" weight="LIGHT"
+                <Font family="SYNC_TO_DEVICE" size="86" weight="LIGHT"
                       color="[CONFIGURATION.themeColor.2]"/>
             </TimeText>
         </DigitalClock>
 
         <!-- ================================================================= -->
-        <!-- SLOT 1: the class period. A single wide capsule, because this is   -->
-        <!-- the thing worth reading at a glance during a school day.           -->
-        <!-- RANGED_VALUE is preferred: the period app reports the period name, -->
-        <!-- the minutes left, and how far through the period we are.           -->
+        <!-- SLOT 1: Cockpit-Grade School Bell Period Pod                      -->
+        <!-- Displays period name, class description, and countdown timer       -->
         <!-- ================================================================= -->
         <ComplicationSlot
             slotId="1"
             displayName="slot_school_schedule"
             supportedTypes="RANGED_VALUE SHORT_TEXT LONG_TEXT GOAL_PROGRESS EMPTY"
-            x="79"
-            y="252"
-            width="292"
-            height="50">
+            x="75"
+            y="236"
+            width="300"
+            height="54">
             <DefaultProviderPolicy
                 primaryProvider="com.shieldrj.schoolperiod/com.shieldrj.schoolperiod.complication.PeriodComplicationService"
                 primaryProviderType="RANGED_VALUE"
@@ -161,36 +150,38 @@
                 secondaryProviderType="RANGED_VALUE"
                 defaultSystemProvider="NEXT_EVENT"
                 defaultSystemProviderType="SHORT_TEXT"/>
-            <BoundingBox x="0" y="0" width="292" height="50" outlinePadding="2.0"/>
+            <BoundingBox x="0" y="0" width="300" height="54" outlinePadding="2.0"/>
 
             <Complication type="RANGED_VALUE">
-                <PartDraw x="0" y="0" width="292" height="50">
-                    <RoundRectangle x="0" y="0" width="292" height="50"
-                                    cornerRadiusX="25" cornerRadiusY="25">
+                <!-- Pod Background Plate -->
+                <PartDraw x="0" y="0" width="300" height="54">
+                    <RoundRectangle x="0" y="0" width="300" height="54"
+                                    cornerRadiusX="27" cornerRadiusY="27">
                         <Fill color="[CONFIGURATION.themeColor.0]"/>
                     </RoundRectangle>
                 </PartDraw>
-                <PartDraw x="0" y="0" width="292" height="50" alpha="70">
-                    <RoundRectangle x="0" y="0" width="292" height="50"
-                                    cornerRadiusX="25" cornerRadiusY="25">
+                <!-- Hairline Gold Border -->
+                <PartDraw x="0" y="0" width="300" height="54" alpha="90">
+                    <RoundRectangle x="0" y="0" width="300" height="54"
+                                    cornerRadiusX="27" cornerRadiusY="27">
                         <Stroke thickness="1.5" color="[CONFIGURATION.themeColor.1]"/>
                     </RoundRectangle>
                 </PartDraw>
-                <!-- Progress through the period, as an arc tracing the bottom
-                     of the capsule. -->
-                <PartDraw x="0" y="0" width="292" height="50">
-                    <Arc centerX="146" centerY="2038" width="4000" height="4000"
+                <!-- Integrated Progress Arc along bottom curve -->
+                <PartDraw x="0" y="0" width="300" height="54">
+                    <Arc centerX="150" centerY="2038" width="4000" height="4000"
                          startAngle="-3.44" endAngle="3.44">
-                        <Stroke thickness="3" color="[CONFIGURATION.themeColor.4]" cap="ROUND"/>
+                        <Stroke thickness="3.5" color="[CONFIGURATION.themeColor.4]" cap="ROUND"/>
                     </Arc>
-                    <Arc centerX="146" centerY="2038" width="4000" height="4000"
+                    <Arc centerX="150" centerY="2038" width="4000" height="4000"
                          startAngle="-3.44" endAngle="3.44">
-                        <Stroke thickness="3" color="[CONFIGURATION.themeColor.1]" cap="ROUND"/>
+                        <Stroke thickness="3.5" color="[CONFIGURATION.themeColor.1]" cap="ROUND"/>
                         <Transform target="endAngle"
                                    value="-3.44 + (((clamp([COMPLICATION.RANGED_VALUE_VALUE], [COMPLICATION.RANGED_VALUE_MIN], [COMPLICATION.RANGED_VALUE_MAX]) - [COMPLICATION.RANGED_VALUE_MIN]) / ([COMPLICATION.RANGED_VALUE_MAX] - [COMPLICATION.RANGED_VALUE_MIN])) * 6.88)"/>
                     </Arc>
                 </PartDraw>
-                <PartText x="26" y="8" width="170" height="24">
+                <!-- Class / Period Name -->
+                <PartText x="26" y="10" width="165" height="26">
                     <Text align="START" ellipsis="TRUE">
                         <Font family="SYNC_TO_DEVICE" size="20" weight="BOLD"
                               color="[CONFIGURATION.themeColor.2]">
@@ -198,7 +189,8 @@
                         </Font>
                     </Text>
                 </PartText>
-                <PartText x="176" y="8" width="90" height="24">
+                <!-- Time Remaining Countdown -->
+                <PartText x="180" y="10" width="94" height="26">
                     <Text align="END" ellipsis="TRUE">
                         <Font family="SYNC_TO_DEVICE" size="20" weight="BOLD"
                               color="[CONFIGURATION.themeColor.1]">
@@ -209,19 +201,19 @@
             </Complication>
 
             <Complication type="SHORT_TEXT">
-                <PartDraw x="0" y="0" width="292" height="50">
-                    <RoundRectangle x="0" y="0" width="292" height="50"
-                                    cornerRadiusX="25" cornerRadiusY="25">
+                <PartDraw x="0" y="0" width="300" height="54">
+                    <RoundRectangle x="0" y="0" width="300" height="54"
+                                    cornerRadiusX="27" cornerRadiusY="27">
                         <Fill color="[CONFIGURATION.themeColor.0]"/>
                     </RoundRectangle>
                 </PartDraw>
-                <PartDraw x="0" y="0" width="292" height="50" alpha="70">
-                    <RoundRectangle x="0" y="0" width="292" height="50"
-                                    cornerRadiusX="25" cornerRadiusY="25">
+                <PartDraw x="0" y="0" width="300" height="54" alpha="90">
+                    <RoundRectangle x="0" y="0" width="300" height="54"
+                                    cornerRadiusX="27" cornerRadiusY="27">
                         <Stroke thickness="1.5" color="[CONFIGURATION.themeColor.1]"/>
                     </RoundRectangle>
                 </PartDraw>
-                <PartText x="26" y="13" width="170" height="24">
+                <PartText x="26" y="14" width="165" height="26">
                     <Text align="START" ellipsis="TRUE">
                         <Font family="SYNC_TO_DEVICE" size="20" weight="BOLD"
                               color="[CONFIGURATION.themeColor.2]">
@@ -229,7 +221,7 @@
                         </Font>
                     </Text>
                 </PartText>
-                <PartText x="176" y="13" width="90" height="24">
+                <PartText x="180" y="14" width="94" height="26">
                     <Text align="END" ellipsis="TRUE">
                         <Font family="SYNC_TO_DEVICE" size="20" weight="BOLD"
                               color="[CONFIGURATION.themeColor.1]">
@@ -240,31 +232,31 @@
             </Complication>
 
             <Complication type="GOAL_PROGRESS">
-                <PartDraw x="0" y="0" width="292" height="50">
-                    <RoundRectangle x="0" y="0" width="292" height="50"
-                                    cornerRadiusX="25" cornerRadiusY="25">
+                <PartDraw x="0" y="0" width="300" height="54">
+                    <RoundRectangle x="0" y="0" width="300" height="54"
+                                    cornerRadiusX="27" cornerRadiusY="27">
                         <Fill color="[CONFIGURATION.themeColor.0]"/>
                     </RoundRectangle>
                 </PartDraw>
-                <PartDraw x="0" y="0" width="292" height="50" alpha="70">
-                    <RoundRectangle x="0" y="0" width="292" height="50"
-                                    cornerRadiusX="25" cornerRadiusY="25">
+                <PartDraw x="0" y="0" width="300" height="54" alpha="90">
+                    <RoundRectangle x="0" y="0" width="300" height="54"
+                                    cornerRadiusX="27" cornerRadiusY="27">
                         <Stroke thickness="1.5" color="[CONFIGURATION.themeColor.1]"/>
                     </RoundRectangle>
                 </PartDraw>
-                <PartDraw x="0" y="0" width="292" height="50">
-                    <Arc centerX="146" centerY="2038" width="4000" height="4000"
+                <PartDraw x="0" y="0" width="300" height="54">
+                    <Arc centerX="150" centerY="2038" width="4000" height="4000"
                          startAngle="-3.44" endAngle="3.44">
-                        <Stroke thickness="3" color="[CONFIGURATION.themeColor.4]" cap="ROUND"/>
+                        <Stroke thickness="3.5" color="[CONFIGURATION.themeColor.4]" cap="ROUND"/>
                     </Arc>
-                    <Arc centerX="146" centerY="2038" width="4000" height="4000"
+                    <Arc centerX="150" centerY="2038" width="4000" height="4000"
                          startAngle="-3.44" endAngle="3.44">
-                        <Stroke thickness="3" color="[CONFIGURATION.themeColor.1]" cap="ROUND"/>
+                        <Stroke thickness="3.5" color="[CONFIGURATION.themeColor.1]" cap="ROUND"/>
                         <Transform target="endAngle"
                                    value="-3.44 + (clamp([COMPLICATION.GOAL_PROGRESS_VALUE], 0, [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) * 6.88"/>
                     </Arc>
                 </PartDraw>
-                <PartText x="26" y="8" width="170" height="24">
+                <PartText x="26" y="10" width="165" height="26">
                     <Text align="START" ellipsis="TRUE">
                         <Font family="SYNC_TO_DEVICE" size="20" weight="BOLD"
                               color="[CONFIGURATION.themeColor.2]">
@@ -272,7 +264,7 @@
                         </Font>
                     </Text>
                 </PartText>
-                <PartText x="176" y="8" width="90" height="24">
+                <PartText x="180" y="10" width="94" height="26">
                     <Text align="END" ellipsis="TRUE">
                         <Font family="SYNC_TO_DEVICE" size="20" weight="BOLD"
                               color="[CONFIGURATION.themeColor.1]">
@@ -283,19 +275,19 @@
             </Complication>
 
             <Complication type="LONG_TEXT">
-                <PartDraw x="0" y="0" width="292" height="50">
-                    <RoundRectangle x="0" y="0" width="292" height="50"
-                                    cornerRadiusX="25" cornerRadiusY="25">
+                <PartDraw x="0" y="0" width="300" height="54">
+                    <RoundRectangle x="0" y="0" width="300" height="54"
+                                    cornerRadiusX="27" cornerRadiusY="27">
                         <Fill color="[CONFIGURATION.themeColor.0]"/>
                     </RoundRectangle>
                 </PartDraw>
-                <PartDraw x="0" y="0" width="292" height="50" alpha="70">
-                    <RoundRectangle x="0" y="0" width="292" height="50"
-                                    cornerRadiusX="25" cornerRadiusY="25">
+                <PartDraw x="0" y="0" width="300" height="54" alpha="90">
+                    <RoundRectangle x="0" y="0" width="300" height="54"
+                                    cornerRadiusX="27" cornerRadiusY="27">
                         <Stroke thickness="1.5" color="[CONFIGURATION.themeColor.1]"/>
                     </RoundRectangle>
                 </PartDraw>
-                <PartText x="22" y="13" width="248" height="24">
+                <PartText x="20" y="14" width="260" height="26">
                     <Text align="CENTER" ellipsis="TRUE">
                         <Font family="SYNC_TO_DEVICE" size="18" weight="BOLD"
                               color="[CONFIGURATION.themeColor.2]">
@@ -307,22 +299,38 @@
         </ComplicationSlot>
 
         <!-- ================================================================= -->
-        <!-- SLOTS 2-4: three small readouts across the bottom. No frame and no -->
-        <!-- filled circle: an icon over a value, or a ring when the source     -->
-        <!-- reports a range. An empty slot draws nothing at all.               -->
+        <!-- SLOTS 2-4: Three Precision Instrument Sub-Dial Hubs               -->
         <!-- ================================================================= -->
+
+        <!-- SLOT 2: Steps / Activity (Bottom Left) -->
         <ComplicationSlot
             slotId="2"
             displayName="slot_steps"
             supportedTypes="SHORT_TEXT RANGED_VALUE GOAL_PROGRESS SMALL_IMAGE MONOCHROMATIC_IMAGE EMPTY"
-            x="92"
-            y="312"
-            width="74"
-            height="74">
+            x="78"
+            y="302"
+            width="86"
+            height="86">
             <DefaultProviderPolicy
                 defaultSystemProvider="STEP_COUNT"
                 defaultSystemProviderType="SHORT_TEXT"/>
-            <BoundingOval x="0" y="0" width="74" height="74" outlinePadding="2.0"/>
+            <BoundingOval x="0" y="0" width="86" height="86" outlinePadding="2.0"/>
+
+            <!-- Sub-Dial Background Halo Plate -->
+            <PartDraw x="0" y="0" width="86" height="86" alpha="40">
+                <Variant mode="AMBIENT" target="alpha" value="0"/>
+                <RoundRectangle x="0" y="0" width="86" height="86"
+                                cornerRadiusX="43" cornerRadiusY="43">
+                    <Fill color="[CONFIGURATION.themeColor.0]"/>
+                </RoundRectangle>
+            </PartDraw>
+            <PartDraw x="0" y="0" width="86" height="86" alpha="50">
+                <Variant mode="AMBIENT" target="alpha" value="0"/>
+                <RoundRectangle x="0" y="0" width="86" height="86"
+                                cornerRadiusX="43" cornerRadiusY="43">
+                    <Stroke thickness="1.0" color="[CONFIGURATION.themeColor.4]"/>
+                </RoundRectangle>
+            </PartDraw>
 
             <Complication type="SHORT_TEXT">
                 <Condition>
@@ -330,11 +338,11 @@
                         <Expression name="hasIcon"><![CDATA[[COMPLICATION.MONOCHROMATIC_IMAGE] != null]]></Expression>
                     </Expressions>
                     <Compare expression="hasIcon">
-                        <PartImage x="26" y="12" width="22" height="22"
+                        <PartImage x="32" y="16" width="22" height="22"
                                    tintColor="[CONFIGURATION.themeColor.3]">
                             <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]"/>
                         </PartImage>
-                        <PartText x="0" y="38" width="74" height="26">
+                        <PartText x="0" y="44" width="86" height="26">
                             <Text align="CENTER" ellipsis="TRUE">
                                 <Font family="SYNC_TO_DEVICE" size="19" weight="BOLD"
                                       color="[CONFIGURATION.themeColor.2]">
@@ -344,7 +352,7 @@
                         </PartText>
                     </Compare>
                     <Default>
-                        <PartText x="0" y="18" width="74" height="26">
+                        <PartText x="0" y="22" width="86" height="26">
                             <Text align="CENTER" ellipsis="TRUE">
                                 <Font family="SYNC_TO_DEVICE" size="21" weight="BOLD"
                                       color="[CONFIGURATION.themeColor.2]">
@@ -352,7 +360,7 @@
                                 </Font>
                             </Text>
                         </PartText>
-                        <PartText x="0" y="43" width="74" height="18">
+                        <PartText x="0" y="48" width="86" height="18">
                             <Text align="CENTER" ellipsis="TRUE">
                                 <Font family="SYNC_TO_DEVICE" size="12" weight="MEDIUM"
                                       color="[CONFIGURATION.themeColor.3]">
@@ -365,21 +373,21 @@
             </Complication>
 
             <Complication type="RANGED_VALUE">
-                <PartDraw x="0" y="0" width="74" height="74">
-                    <Arc centerX="37" centerY="37" width="68" height="68"
-                         startAngle="-140" endAngle="140">
-                        <Stroke thickness="3" color="[CONFIGURATION.themeColor.4]" cap="ROUND"/>
+                <PartDraw x="0" y="0" width="86" height="86">
+                    <Arc centerX="43" centerY="43" width="76" height="76"
+                         startAngle="-135" endAngle="135">
+                        <Stroke thickness="3.5" color="[CONFIGURATION.themeColor.4]" cap="ROUND"/>
                     </Arc>
-                    <Arc centerX="37" centerY="37" width="68" height="68"
-                         startAngle="-140" endAngle="140">
-                        <Stroke thickness="3" color="[CONFIGURATION.themeColor.1]" cap="ROUND"/>
+                    <Arc centerX="43" centerY="43" width="76" height="76"
+                         startAngle="-135" endAngle="135">
+                        <Stroke thickness="3.5" color="[CONFIGURATION.themeColor.1]" cap="ROUND"/>
                         <Transform target="endAngle"
-                                   value="-140 + (((clamp([COMPLICATION.RANGED_VALUE_VALUE], [COMPLICATION.RANGED_VALUE_MIN], [COMPLICATION.RANGED_VALUE_MAX]) - [COMPLICATION.RANGED_VALUE_MIN]) / ([COMPLICATION.RANGED_VALUE_MAX] - [COMPLICATION.RANGED_VALUE_MIN])) * 280)"/>
+                                   value="-135 + (((clamp([COMPLICATION.RANGED_VALUE_VALUE], [COMPLICATION.RANGED_VALUE_MIN], [COMPLICATION.RANGED_VALUE_MAX]) - [COMPLICATION.RANGED_VALUE_MIN]) / ([COMPLICATION.RANGED_VALUE_MAX] - [COMPLICATION.RANGED_VALUE_MIN])) * 270)"/>
                     </Arc>
                 </PartDraw>
-                <PartText x="9" y="24" width="56" height="26">
+                <PartText x="8" y="30" width="70" height="26">
                     <Text align="CENTER" ellipsis="TRUE">
-                        <Font family="SYNC_TO_DEVICE" size="17" weight="BOLD"
+                        <Font family="SYNC_TO_DEVICE" size="18" weight="BOLD"
                               color="[CONFIGURATION.themeColor.2]">
                             <Template>%s<Parameter expression="[COMPLICATION.TEXT]"/></Template>
                         </Font>
@@ -388,21 +396,21 @@
             </Complication>
 
             <Complication type="GOAL_PROGRESS">
-                <PartDraw x="0" y="0" width="74" height="74">
-                    <Arc centerX="37" centerY="37" width="68" height="68"
-                         startAngle="-140" endAngle="140">
-                        <Stroke thickness="3" color="[CONFIGURATION.themeColor.4]" cap="ROUND"/>
+                <PartDraw x="0" y="0" width="86" height="86">
+                    <Arc centerX="43" centerY="43" width="76" height="76"
+                         startAngle="-135" endAngle="135">
+                        <Stroke thickness="3.5" color="[CONFIGURATION.themeColor.4]" cap="ROUND"/>
                     </Arc>
-                    <Arc centerX="37" centerY="37" width="68" height="68"
-                         startAngle="-140" endAngle="140">
-                        <Stroke thickness="3" color="[CONFIGURATION.themeColor.1]" cap="ROUND"/>
+                    <Arc centerX="43" centerY="43" width="76" height="76"
+                         startAngle="-135" endAngle="135">
+                        <Stroke thickness="3.5" color="[CONFIGURATION.themeColor.1]" cap="ROUND"/>
                         <Transform target="endAngle"
-                                   value="-140 + (clamp([COMPLICATION.GOAL_PROGRESS_VALUE], 0, [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) * 280"/>
+                                   value="-135 + (clamp([COMPLICATION.GOAL_PROGRESS_VALUE], 0, [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) * 270"/>
                     </Arc>
                 </PartDraw>
-                <PartText x="9" y="24" width="56" height="26">
+                <PartText x="8" y="30" width="70" height="26">
                     <Text align="CENTER" ellipsis="TRUE">
-                        <Font family="SYNC_TO_DEVICE" size="17" weight="BOLD"
+                        <Font family="SYNC_TO_DEVICE" size="18" weight="BOLD"
                               color="[CONFIGURATION.themeColor.2]">
                             <Template>%s<Parameter expression="[COMPLICATION.TEXT]"/></Template>
                         </Font>
@@ -411,31 +419,48 @@
             </Complication>
 
             <Complication type="MONOCHROMATIC_IMAGE">
-                <PartImage x="21" y="21" width="32" height="32"
+                <PartImage x="27" y="27" width="32" height="32"
                            tintColor="[CONFIGURATION.themeColor.2]">
                     <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]"/>
                 </PartImage>
             </Complication>
 
             <Complication type="SMALL_IMAGE">
-                <PartImage x="21" y="21" width="32" height="32">
+                <PartImage x="27" y="27" width="32" height="32">
                     <Image resource="[COMPLICATION.SMALL_IMAGE]"/>
                 </PartImage>
             </Complication>
         </ComplicationSlot>
 
+        <!-- SLOT 3: Heart Rate / Biometrics (Bottom Center) -->
         <ComplicationSlot
             slotId="3"
             displayName="slot_heart_rate"
             supportedTypes="SHORT_TEXT RANGED_VALUE GOAL_PROGRESS SMALL_IMAGE MONOCHROMATIC_IMAGE EMPTY"
-            x="188"
-            y="312"
-            width="74"
-            height="74">
+            x="182"
+            y="302"
+            width="86"
+            height="86">
             <DefaultProviderPolicy
                 defaultSystemProvider="HEART_RATE"
                 defaultSystemProviderType="SHORT_TEXT"/>
-            <BoundingOval x="0" y="0" width="74" height="74" outlinePadding="2.0"/>
+            <BoundingOval x="0" y="0" width="86" height="86" outlinePadding="2.0"/>
+
+            <!-- Sub-Dial Background Halo Plate -->
+            <PartDraw x="0" y="0" width="86" height="86" alpha="40">
+                <Variant mode="AMBIENT" target="alpha" value="0"/>
+                <RoundRectangle x="0" y="0" width="86" height="86"
+                                cornerRadiusX="43" cornerRadiusY="43">
+                    <Fill color="[CONFIGURATION.themeColor.0]"/>
+                </RoundRectangle>
+            </PartDraw>
+            <PartDraw x="0" y="0" width="86" height="86" alpha="50">
+                <Variant mode="AMBIENT" target="alpha" value="0"/>
+                <RoundRectangle x="0" y="0" width="86" height="86"
+                                cornerRadiusX="43" cornerRadiusY="43">
+                    <Stroke thickness="1.0" color="[CONFIGURATION.themeColor.4]"/>
+                </RoundRectangle>
+            </PartDraw>
 
             <Complication type="SHORT_TEXT">
                 <Condition>
@@ -443,11 +468,11 @@
                         <Expression name="hasIcon"><![CDATA[[COMPLICATION.MONOCHROMATIC_IMAGE] != null]]></Expression>
                     </Expressions>
                     <Compare expression="hasIcon">
-                        <PartImage x="26" y="12" width="22" height="22"
+                        <PartImage x="32" y="16" width="22" height="22"
                                    tintColor="[CONFIGURATION.themeColor.3]">
                             <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]"/>
                         </PartImage>
-                        <PartText x="0" y="38" width="74" height="26">
+                        <PartText x="0" y="44" width="86" height="26">
                             <Text align="CENTER" ellipsis="TRUE">
                                 <Font family="SYNC_TO_DEVICE" size="19" weight="BOLD"
                                       color="[CONFIGURATION.themeColor.2]">
@@ -457,7 +482,7 @@
                         </PartText>
                     </Compare>
                     <Default>
-                        <PartText x="0" y="18" width="74" height="26">
+                        <PartText x="0" y="22" width="86" height="26">
                             <Text align="CENTER" ellipsis="TRUE">
                                 <Font family="SYNC_TO_DEVICE" size="21" weight="BOLD"
                                       color="[CONFIGURATION.themeColor.2]">
@@ -465,7 +490,7 @@
                                 </Font>
                             </Text>
                         </PartText>
-                        <PartText x="0" y="43" width="74" height="18">
+                        <PartText x="0" y="48" width="86" height="18">
                             <Text align="CENTER" ellipsis="TRUE">
                                 <Font family="SYNC_TO_DEVICE" size="12" weight="MEDIUM"
                                       color="[CONFIGURATION.themeColor.3]">
@@ -478,21 +503,21 @@
             </Complication>
 
             <Complication type="RANGED_VALUE">
-                <PartDraw x="0" y="0" width="74" height="74">
-                    <Arc centerX="37" centerY="37" width="68" height="68"
-                         startAngle="-140" endAngle="140">
-                        <Stroke thickness="3" color="[CONFIGURATION.themeColor.4]" cap="ROUND"/>
+                <PartDraw x="0" y="0" width="86" height="86">
+                    <Arc centerX="43" centerY="43" width="76" height="76"
+                         startAngle="-135" endAngle="135">
+                        <Stroke thickness="3.5" color="[CONFIGURATION.themeColor.4]" cap="ROUND"/>
                     </Arc>
-                    <Arc centerX="37" centerY="37" width="68" height="68"
-                         startAngle="-140" endAngle="140">
-                        <Stroke thickness="3" color="[CONFIGURATION.themeColor.1]" cap="ROUND"/>
+                    <Arc centerX="43" centerY="43" width="76" height="76"
+                         startAngle="-135" endAngle="135">
+                        <Stroke thickness="3.5" color="[CONFIGURATION.themeColor.1]" cap="ROUND"/>
                         <Transform target="endAngle"
-                                   value="-140 + (((clamp([COMPLICATION.RANGED_VALUE_VALUE], [COMPLICATION.RANGED_VALUE_MIN], [COMPLICATION.RANGED_VALUE_MAX]) - [COMPLICATION.RANGED_VALUE_MIN]) / ([COMPLICATION.RANGED_VALUE_MAX] - [COMPLICATION.RANGED_VALUE_MIN])) * 280)"/>
+                                   value="-135 + (((clamp([COMPLICATION.RANGED_VALUE_VALUE], [COMPLICATION.RANGED_VALUE_MIN], [COMPLICATION.RANGED_VALUE_MAX]) - [COMPLICATION.RANGED_VALUE_MIN]) / ([COMPLICATION.RANGED_VALUE_MAX] - [COMPLICATION.RANGED_VALUE_MIN])) * 270)"/>
                     </Arc>
                 </PartDraw>
-                <PartText x="9" y="24" width="56" height="26">
+                <PartText x="8" y="30" width="70" height="26">
                     <Text align="CENTER" ellipsis="TRUE">
-                        <Font family="SYNC_TO_DEVICE" size="17" weight="BOLD"
+                        <Font family="SYNC_TO_DEVICE" size="18" weight="BOLD"
                               color="[CONFIGURATION.themeColor.2]">
                             <Template>%s<Parameter expression="[COMPLICATION.TEXT]"/></Template>
                         </Font>
@@ -501,21 +526,21 @@
             </Complication>
 
             <Complication type="GOAL_PROGRESS">
-                <PartDraw x="0" y="0" width="74" height="74">
-                    <Arc centerX="37" centerY="37" width="68" height="68"
-                         startAngle="-140" endAngle="140">
-                        <Stroke thickness="3" color="[CONFIGURATION.themeColor.4]" cap="ROUND"/>
+                <PartDraw x="0" y="0" width="86" height="86">
+                    <Arc centerX="43" centerY="43" width="76" height="76"
+                         startAngle="-135" endAngle="135">
+                        <Stroke thickness="3.5" color="[CONFIGURATION.themeColor.4]" cap="ROUND"/>
                     </Arc>
-                    <Arc centerX="37" centerY="37" width="68" height="68"
-                         startAngle="-140" endAngle="140">
-                        <Stroke thickness="3" color="[CONFIGURATION.themeColor.1]" cap="ROUND"/>
+                    <Arc centerX="43" centerY="43" width="76" height="76"
+                         startAngle="-135" endAngle="135">
+                        <Stroke thickness="3.5" color="[CONFIGURATION.themeColor.1]" cap="ROUND"/>
                         <Transform target="endAngle"
-                                   value="-140 + (clamp([COMPLICATION.GOAL_PROGRESS_VALUE], 0, [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) * 280"/>
+                                   value="-135 + (clamp([COMPLICATION.GOAL_PROGRESS_VALUE], 0, [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) * 270"/>
                     </Arc>
                 </PartDraw>
-                <PartText x="9" y="24" width="56" height="26">
+                <PartText x="8" y="30" width="70" height="26">
                     <Text align="CENTER" ellipsis="TRUE">
-                        <Font family="SYNC_TO_DEVICE" size="17" weight="BOLD"
+                        <Font family="SYNC_TO_DEVICE" size="18" weight="BOLD"
                               color="[CONFIGURATION.themeColor.2]">
                             <Template>%s<Parameter expression="[COMPLICATION.TEXT]"/></Template>
                         </Font>
@@ -524,31 +549,48 @@
             </Complication>
 
             <Complication type="MONOCHROMATIC_IMAGE">
-                <PartImage x="21" y="21" width="32" height="32"
+                <PartImage x="27" y="27" width="32" height="32"
                            tintColor="[CONFIGURATION.themeColor.2]">
                     <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]"/>
                 </PartImage>
             </Complication>
 
             <Complication type="SMALL_IMAGE">
-                <PartImage x="21" y="21" width="32" height="32">
+                <PartImage x="27" y="27" width="32" height="32">
                     <Image resource="[COMPLICATION.SMALL_IMAGE]"/>
                 </PartImage>
             </Complication>
         </ComplicationSlot>
 
+        <!-- SLOT 4: Weather / UV / Environment (Bottom Right) -->
         <ComplicationSlot
             slotId="4"
             displayName="slot_weather"
             supportedTypes="SHORT_TEXT RANGED_VALUE GOAL_PROGRESS SMALL_IMAGE MONOCHROMATIC_IMAGE EMPTY"
-            x="284"
-            y="312"
-            width="74"
-            height="74">
+            x="286"
+            y="302"
+            width="86"
+            height="86">
             <DefaultProviderPolicy
                 defaultSystemProvider="SUNRISE_SUNSET"
                 defaultSystemProviderType="SHORT_TEXT"/>
-            <BoundingOval x="0" y="0" width="74" height="74" outlinePadding="2.0"/>
+            <BoundingOval x="0" y="0" width="86" height="86" outlinePadding="2.0"/>
+
+            <!-- Sub-Dial Background Halo Plate -->
+            <PartDraw x="0" y="0" width="86" height="86" alpha="40">
+                <Variant mode="AMBIENT" target="alpha" value="0"/>
+                <RoundRectangle x="0" y="0" width="86" height="86"
+                                cornerRadiusX="43" cornerRadiusY="43">
+                    <Fill color="[CONFIGURATION.themeColor.0]"/>
+                </RoundRectangle>
+            </PartDraw>
+            <PartDraw x="0" y="0" width="86" height="86" alpha="50">
+                <Variant mode="AMBIENT" target="alpha" value="0"/>
+                <RoundRectangle x="0" y="0" width="86" height="86"
+                                cornerRadiusX="43" cornerRadiusY="43">
+                    <Stroke thickness="1.0" color="[CONFIGURATION.themeColor.4]"/>
+                </RoundRectangle>
+            </PartDraw>
 
             <Complication type="SHORT_TEXT">
                 <Condition>
@@ -556,11 +598,11 @@
                         <Expression name="hasIcon"><![CDATA[[COMPLICATION.MONOCHROMATIC_IMAGE] != null]]></Expression>
                     </Expressions>
                     <Compare expression="hasIcon">
-                        <PartImage x="26" y="12" width="22" height="22"
+                        <PartImage x="32" y="16" width="22" height="22"
                                    tintColor="[CONFIGURATION.themeColor.3]">
                             <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]"/>
                         </PartImage>
-                        <PartText x="0" y="38" width="74" height="26">
+                        <PartText x="0" y="44" width="86" height="26">
                             <Text align="CENTER" ellipsis="TRUE">
                                 <Font family="SYNC_TO_DEVICE" size="19" weight="BOLD"
                                       color="[CONFIGURATION.themeColor.2]">
@@ -570,7 +612,7 @@
                         </PartText>
                     </Compare>
                     <Default>
-                        <PartText x="0" y="18" width="74" height="26">
+                        <PartText x="0" y="22" width="86" height="26">
                             <Text align="CENTER" ellipsis="TRUE">
                                 <Font family="SYNC_TO_DEVICE" size="21" weight="BOLD"
                                       color="[CONFIGURATION.themeColor.2]">
@@ -578,7 +620,7 @@
                                 </Font>
                             </Text>
                         </PartText>
-                        <PartText x="0" y="43" width="74" height="18">
+                        <PartText x="0" y="48" width="86" height="18">
                             <Text align="CENTER" ellipsis="TRUE">
                                 <Font family="SYNC_TO_DEVICE" size="12" weight="MEDIUM"
                                       color="[CONFIGURATION.themeColor.3]">
@@ -591,21 +633,21 @@
             </Complication>
 
             <Complication type="RANGED_VALUE">
-                <PartDraw x="0" y="0" width="74" height="74">
-                    <Arc centerX="37" centerY="37" width="68" height="68"
-                         startAngle="-140" endAngle="140">
-                        <Stroke thickness="3" color="[CONFIGURATION.themeColor.4]" cap="ROUND"/>
+                <PartDraw x="0" y="0" width="86" height="86">
+                    <Arc centerX="43" centerY="43" width="76" height="76"
+                         startAngle="-135" endAngle="135">
+                        <Stroke thickness="3.5" color="[CONFIGURATION.themeColor.4]" cap="ROUND"/>
                     </Arc>
-                    <Arc centerX="37" centerY="37" width="68" height="68"
-                         startAngle="-140" endAngle="140">
-                        <Stroke thickness="3" color="[CONFIGURATION.themeColor.1]" cap="ROUND"/>
+                    <Arc centerX="43" centerY="43" width="76" height="76"
+                         startAngle="-135" endAngle="135">
+                        <Stroke thickness="3.5" color="[CONFIGURATION.themeColor.1]" cap="ROUND"/>
                         <Transform target="endAngle"
-                                   value="-140 + (((clamp([COMPLICATION.RANGED_VALUE_VALUE], [COMPLICATION.RANGED_VALUE_MIN], [COMPLICATION.RANGED_VALUE_MAX]) - [COMPLICATION.RANGED_VALUE_MIN]) / ([COMPLICATION.RANGED_VALUE_MAX] - [COMPLICATION.RANGED_VALUE_MIN])) * 280)"/>
+                                   value="-135 + (((clamp([COMPLICATION.RANGED_VALUE_VALUE], [COMPLICATION.RANGED_VALUE_MIN], [COMPLICATION.RANGED_VALUE_MAX]) - [COMPLICATION.RANGED_VALUE_MIN]) / ([COMPLICATION.RANGED_VALUE_MAX] - [COMPLICATION.RANGED_VALUE_MIN])) * 270)"/>
                     </Arc>
                 </PartDraw>
-                <PartText x="9" y="24" width="56" height="26">
+                <PartText x="8" y="30" width="70" height="26">
                     <Text align="CENTER" ellipsis="TRUE">
-                        <Font family="SYNC_TO_DEVICE" size="17" weight="BOLD"
+                        <Font family="SYNC_TO_DEVICE" size="18" weight="BOLD"
                               color="[CONFIGURATION.themeColor.2]">
                             <Template>%s<Parameter expression="[COMPLICATION.TEXT]"/></Template>
                         </Font>
@@ -614,21 +656,21 @@
             </Complication>
 
             <Complication type="GOAL_PROGRESS">
-                <PartDraw x="0" y="0" width="74" height="74">
-                    <Arc centerX="37" centerY="37" width="68" height="68"
-                         startAngle="-140" endAngle="140">
-                        <Stroke thickness="3" color="[CONFIGURATION.themeColor.4]" cap="ROUND"/>
+                <PartDraw x="0" y="0" width="86" height="86">
+                    <Arc centerX="43" centerY="43" width="76" height="76"
+                         startAngle="-135" endAngle="135">
+                        <Stroke thickness="3.5" color="[CONFIGURATION.themeColor.4]" cap="ROUND"/>
                     </Arc>
-                    <Arc centerX="37" centerY="37" width="68" height="68"
-                         startAngle="-140" endAngle="140">
-                        <Stroke thickness="3" color="[CONFIGURATION.themeColor.1]" cap="ROUND"/>
+                    <Arc centerX="43" centerY="43" width="76" height="76"
+                         startAngle="-135" endAngle="135">
+                        <Stroke thickness="3.5" color="[CONFIGURATION.themeColor.1]" cap="ROUND"/>
                         <Transform target="endAngle"
-                                   value="-140 + (clamp([COMPLICATION.GOAL_PROGRESS_VALUE], 0, [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) * 280"/>
+                                   value="-135 + (clamp([COMPLICATION.GOAL_PROGRESS_VALUE], 0, [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) * 270"/>
                     </Arc>
                 </PartDraw>
-                <PartText x="9" y="24" width="56" height="26">
+                <PartText x="8" y="30" width="70" height="26">
                     <Text align="CENTER" ellipsis="TRUE">
-                        <Font family="SYNC_TO_DEVICE" size="17" weight="BOLD"
+                        <Font family="SYNC_TO_DEVICE" size="18" weight="BOLD"
                               color="[CONFIGURATION.themeColor.2]">
                             <Template>%s<Parameter expression="[COMPLICATION.TEXT]"/></Template>
                         </Font>
@@ -637,14 +679,14 @@
             </Complication>
 
             <Complication type="MONOCHROMATIC_IMAGE">
-                <PartImage x="21" y="21" width="32" height="32"
+                <PartImage x="27" y="27" width="32" height="32"
                            tintColor="[CONFIGURATION.themeColor.2]">
                     <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]"/>
                 </PartImage>
             </Complication>
 
             <Complication type="SMALL_IMAGE">
-                <PartImage x="21" y="21" width="32" height="32">
+                <PartImage x="27" y="27" width="32" height="32">
                     <Image resource="[COMPLICATION.SMALL_IMAGE]"/>
                 </PartImage>
             </Complication>
