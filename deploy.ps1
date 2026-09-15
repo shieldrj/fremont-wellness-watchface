@@ -179,7 +179,28 @@ if ($installText -notmatch 'Success') {
 $versionLine = (& adb -s $serial shell dumpsys package $PackageName) |
     Where-Object { $_ -match 'versionName=' } |
     Select-Object -First 1
-Write-Ok "Installed $PackageName - $(($versionLine -replace '^\s+', ''))"
+$onWatch = if ($versionLine -match 'versionName=(.*)$') { $Matches[1].Trim() } else { $null }
+Write-Ok "Installed $PackageName - versionName=$onWatch"
+
+# Compare against what was just built. Observed once in the sibling repo: a deploy reported an
+# older commit than HEAD because a stale APK got installed. The whole point of this script is
+# that what it says is on the watch really is on the watch, so the two are checked against each
+# other rather than trusted.
+$builtManifest = Join-Path $PSScriptRoot 'app\build\intermediates\merged_manifests\debug\processDebugManifest\AndroidManifest.xml'
+if ((Test-Path $builtManifest) -and $onWatch) {
+    $match = Select-String -Path $builtManifest -Pattern 'android:versionName="([^"]*)"' |
+        Select-Object -First 1
+    if ($match) {
+        $built = $match.Matches[0].Groups[1].Value
+        if ($built -ne $onWatch) {
+            Write-Host ''
+            Write-Host "MISMATCH: built '$built' but the watch reports '$onWatch'." -ForegroundColor Red
+            Write-Host 'The watch is NOT running what was just built. Re-run with a clean build:'
+            Write-Host '  .\gradlew.bat :app:clean ; .\deploy.ps1'
+            exit 1
+        }
+    }
+}
 
 # --- 5. Say whether the new build is actually the face on screen -------------------------------
 
